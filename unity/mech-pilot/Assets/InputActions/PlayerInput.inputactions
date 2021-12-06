@@ -1,0 +1,79 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "Menu",
+            "id": "886aa11a-65f3-400c-8bfd-5955d206415f",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "fd0421ad-7a38-4d65-90eb-c03599015d18",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7b93dc9a-c51b-40d1-97a6-36ffd45e8e85",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Gameplay",
+            "id": "e6652b49-55ae-4e39-8e3f-daf65cbe51fd",
+            "actions": [
+                {
+                    "name": "PointerPosition",
+                    "type": "PassThrough",
+                    "id": "91243fab-6e10-4a49-825a-03c0074da3b7",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PointerDown",
+                    "type": "PassThrough",
+                    "id": "8be1b6d9-47f9-40d9-90a1-b7170e1f8ab6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ecce1247-223f-4a22-b962-e901142cfa15",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "544e504c-cfd6-41be-862e-b921e184cb51",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
