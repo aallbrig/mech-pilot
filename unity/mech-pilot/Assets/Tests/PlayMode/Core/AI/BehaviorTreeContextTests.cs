@@ -10,10 +10,10 @@ namespace Tests.PlayMode.Core.AI
 
     public class BehaviorTreeSpy: IBehaviorTree
     {
-        public BehaviorTreeData data;
+        public BehaviorTreeData Data;
         public void Tick(BehaviorTreeData context)
         {
-            data = context;
+            Data = context;
         }
     }
 
@@ -54,7 +54,7 @@ namespace Tests.PlayMode.Core.AI
 
             sut.Tick(0);
 
-            Assert.AreEqual(spy.data, new BehaviorTreeData { CurrentPlayTime = 0, GameObject = gameObject });
+            Assert.AreEqual(spy.Data, new BehaviorTreeData { CurrentPlayTime = 0, GameObject = gameObject });
         }
     }
 }

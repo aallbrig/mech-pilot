@@ -2,26 +2,18 @@ using UnityEngine;
 
 namespace Core.AI
 {
-    public enum BehaviorExecuteStatus
+    public enum BehaviorExecutionStatus
     {
         Success,
+        InProgress,
         Failure
     }
 
-    public struct BehaviorOperation
+    public abstract class Behavior: ScriptableObject
     {
-        public BehaviorExecuteStatus Status;
-    }
+        public abstract BehaviorExecutionStatus Execute(BehaviorTreeData context);
 
-    public class Behavior: ScriptableObject
-    {
-
-        public BehaviorOperation Execute(GameObject gameObject)
-        {
-            return new BehaviorOperation
-            {
-                Status = BehaviorExecuteStatus.Success
-            };
-        }
+        public Behavior Child { get; set; }
+        public Behavior Sibling { get; set; }
     }
 }

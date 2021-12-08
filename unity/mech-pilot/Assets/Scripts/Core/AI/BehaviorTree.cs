@@ -2,27 +2,25 @@ using UnityEngine;
 
 namespace Core.AI
 {
-    public enum BehaviorTreeOperationStatus
+    public abstract class BehaviorTree : ScriptableObject, IBehaviorTree
     {
-        Success,
-        Failure
-    }
+        public Behavior CurrentBehavior { get; set; }
 
-    public struct BehaviorTreeOperation
-    {
-        public BehaviorTreeOperationStatus Status;
-    }
-
-    public interface BehaviorTreeService
-    {
-        public BehaviorTreeOperation Tick(GameObject context);
-    }
-
-    public class BehaviorTree : ScriptableObject, BehaviorTreeService
-    {
-        public BehaviorTreeOperation Tick(GameObject context) => new BehaviorTreeOperation
+        public virtual void Tick(BehaviorTreeData context)
         {
-            Status = BehaviorTreeOperationStatus.Success
-        };
+            var status = CurrentBehavior.Execute(context);
+
+            switch (status)
+            {
+                case BehaviorExecutionStatus.InProgress:
+                    break;
+                case BehaviorExecutionStatus.Success:
+                    if (CurrentBehavior.Child) CurrentBehavior = CurrentBehavior.Child;
+                    break;
+                case BehaviorExecutionStatus.Failure:
+                    if (CurrentBehavior.Sibling) CurrentBehavior = CurrentBehavior.Sibling;
+                    break;
+            }
+        }
     }
 }
