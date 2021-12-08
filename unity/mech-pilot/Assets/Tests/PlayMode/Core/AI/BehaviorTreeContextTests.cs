@@ -1,10 +1,21 @@
+using System.Collections;
 using Core.AI;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Tests.PlayMode.Core.AI
 {
-    public class TestBehaviorTreeMonoBehaviour : BehaviorTreeContext {};
+    public class TestBehaviorTreeMonoBehaviour: BehaviorTreeContext {};
+
+    public class BehaviorTreeSpy: IBehaviorTree
+    {
+        public BehaviorTreeData data;
+        public void Tick(BehaviorTreeData context)
+        {
+            data = context;
+        }
+    }
 
     public class BehaviorTreeContextTests
     {
@@ -30,6 +41,20 @@ namespace Tests.PlayMode.Core.AI
             
             Assert.AreEqual(BlackboardOperationStatus.Success, result.Status);
             Assert.AreEqual(value, result.Data );
+        }
+
+        [UnityTest]
+        public IEnumerator BehaviorTreeContext_CollaboratesWith_BehaviorTree()
+        {
+            var gameObject = new GameObject();
+            var sut = gameObject.AddComponent<TestBehaviorTreeMonoBehaviour>();
+            var spy = new BehaviorTreeSpy();
+            sut.behaviorTree = spy;
+            yield return new WaitForEndOfFrame();
+
+            sut.Tick(0);
+
+            Assert.AreEqual(spy.data, new BehaviorTreeData { CurrentPlayTime = 0, GameObject = gameObject });
         }
     }
 }
