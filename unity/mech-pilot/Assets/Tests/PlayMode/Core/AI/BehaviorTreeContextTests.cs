@@ -50,7 +50,7 @@ namespace Tests.PlayMode.Core.AI
             var sut = gameObject.AddComponent<TestBehaviorTreeMonoBehaviour>();
             var spy = new BehaviorTreeSpy();
             sut.behaviorTree = spy;
-            yield return new WaitForEndOfFrame();
+            yield return null;
 
             sut.Tick(0);
 
