@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Core.AI
 {
-    public abstract class BehaviorTree : ScriptableObject, IBehaviorTree
+    public class BehaviorTree : ScriptableObject, IBehaviorTree
     {
         private Behavior CurrentBehavior { get; set; }
 

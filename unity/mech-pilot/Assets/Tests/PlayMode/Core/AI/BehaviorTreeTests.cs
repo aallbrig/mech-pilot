@@ -12,6 +12,7 @@ namespace Tests.PlayMode.Core.AI
     public class BehaviorTreeTests
     {
         [Test]
-        public void BehaviorTrees_CanBeInstantiated() => Assert.NotNull(ScriptableObject.CreateInstance<BehaviorTreeTester>());
+        public void BehaviorTrees_CanBeInstantiated() =>
+            Assert.NotNull(ScriptableObject.CreateInstance<BehaviorTreeTester>());
     }
 }

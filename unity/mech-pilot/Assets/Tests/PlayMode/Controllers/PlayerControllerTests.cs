@@ -1,8 +1,6 @@
 using Controllers;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.EnhancedTouch;
 
 namespace Tests.PlayMode.Controllers

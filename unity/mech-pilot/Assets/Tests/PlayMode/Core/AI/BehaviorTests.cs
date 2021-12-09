@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Tests.PlayMode.Core.AI
 {
-    public class FakeBehaviorTree: IBehaviorTree
+    public class FakeBehaviorTree : IBehaviorTree
     {
         public void Tick(BehaviorTreeContext btContext) {}
     }
 
-    public class SpyBehaviorTreeContext: BehaviorTreeContext
+    public class SpyBehaviorTreeContext : BehaviorTreeContext
     {
         protected override IBehaviorTree BuildBehaviorTree() => new FakeBehaviorTree();
     }

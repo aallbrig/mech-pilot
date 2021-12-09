@@ -1,19 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using Core.AI;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using NUnit.Framework;
 
 namespace Tests.PlayMode.Core.AI
 {
-    public class BehaviorTreeSpy: IBehaviorTree
+    public class BehaviorTreeSpy : IBehaviorTree
     {
         public BehaviorTreeContext Context;
         public void Tick(BehaviorTreeContext context) => Context = context;
     }
 
-    public class BehaviorTreeContextTestBehaviour: BehaviorTreeContext
+    public class BehaviorTreeContextTestBehaviour : BehaviorTreeContext
     {
         public readonly BehaviorTreeSpy Spy = new BehaviorTreeSpy();
         protected override IBehaviorTree BuildBehaviorTree() => Spy;
@@ -39,7 +38,7 @@ namespace Tests.PlayMode.Core.AI
             var sut = new GameObject().AddComponent<BehaviorTreeContextTestBehaviour>();
 
             yield return new WaitForEndOfFrame();
-            
+
             Assert.IsTrue(sut.Blackboard.AvailableKeys.Contains("GameObject"));
         }
 

@@ -27,7 +27,7 @@ namespace Tests.PlayMode.Core.AI
             var result = sut.Read(key);
 
             Assert.AreEqual(BlackboardOperationStatus.Success, result.Status);
-            Assert.AreEqual(value, result.Data );
+            Assert.AreEqual(value, result.Data);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Tests.PlayMode.Core.AI
             Assert.AreEqual(BlackboardOperationStatus.Failure, sut.Read(key).Status);
             Assert.AreEqual(emptySet, sut.AvailableKeys);
         }
-        
+
         [Test]
         public void Blackboard_TypeSafeRead()
         {

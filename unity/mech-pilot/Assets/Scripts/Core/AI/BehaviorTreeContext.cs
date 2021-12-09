@@ -10,12 +10,8 @@ namespace Core.AI
     public abstract class BehaviorTreeContext : MonoBehaviour
     {
         public readonly Blackboard Blackboard = new Blackboard();
-        private BehaviorTreeContext _self;
         private IBehaviorTree _behaviorTree;
-
-        public void Tick() => _behaviorTree.Tick(_self);
-
-        protected abstract IBehaviorTree BuildBehaviorTree();
+        private BehaviorTreeContext _self;
 
         protected virtual void Start()
         {
@@ -26,5 +22,9 @@ namespace Core.AI
         }
 
         protected virtual void Update() => Blackboard.Write("CurrentPlayTime", Time.time);
+
+        public void Tick() => _behaviorTree.Tick(_self);
+
+        protected abstract IBehaviorTree BuildBehaviorTree();
     }
 }

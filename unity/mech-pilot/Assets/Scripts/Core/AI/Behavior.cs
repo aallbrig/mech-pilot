@@ -9,11 +9,12 @@ namespace Core.AI
         Failure
     }
 
-    public abstract class Behavior: ScriptableObject
+    public abstract class Behavior : ScriptableObject
     {
-        public abstract BehaviorExecutionStatus Execute(BehaviorTreeContext context);
-
         public Behavior Child { get; set; }
+
         public Behavior Sibling { get; set; }
+
+        public abstract BehaviorExecutionStatus Execute(BehaviorTreeContext context);
     }
 }

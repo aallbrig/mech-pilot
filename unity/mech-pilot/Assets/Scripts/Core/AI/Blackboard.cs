@@ -13,36 +13,39 @@ namespace Core.AI
     {
         public BlackboardQueryOperation(BlackboardOperationStatus status, T data)
         {
-            Status = status; Data = data;
+            Status = status;
+            Data = data;
         }
 
-        public BlackboardOperationStatus Status { get; private set; }
-        public T Data { get; private set; }
+        public BlackboardOperationStatus Status { get; }
+
+        public T Data { get; }
     }
 
     public class BlackboardCommandOperation
     {
+
+        private BlackboardCommandOperation() {}
+
+        public BlackboardOperationStatus Status { get; private set; }
+
         public static BlackboardCommandOperation Of(BlackboardOperationStatus status) =>
             new BlackboardCommandOperation
             {
                 Status = status
             };
-
-        private BlackboardCommandOperation() {}
-
-        public BlackboardOperationStatus Status { get; private set; }
     }
 
     public class Blackboard
     {
+
+        private readonly Dictionary<string, object> _blackboardData;
+        public readonly HashSet<string> AvailableKeys;
         public Blackboard()
         {
             _blackboardData = new Dictionary<string, object>();
             AvailableKeys = new HashSet<string>();
         }
-
-        private readonly Dictionary<string, object> _blackboardData;
-        public readonly HashSet<string> AvailableKeys;
 
         public BlackboardCommandOperation Write(string blackboardKey, object blackboardValue)
         {
@@ -67,7 +70,8 @@ namespace Core.AI
         public BlackboardQueryOperation<object> Read(string blackboardKey)
         {
             if (_blackboardData.ContainsKey(blackboardKey))
-                return new BlackboardQueryOperation<object>(BlackboardOperationStatus.Success, _blackboardData[blackboardKey]);
+                return new BlackboardQueryOperation<object>(BlackboardOperationStatus.Success,
+                    _blackboardData[blackboardKey]);
 
             return new BlackboardQueryOperation<object>(BlackboardOperationStatus.Failure, null);
         }
@@ -75,16 +79,15 @@ namespace Core.AI
         public BlackboardQueryOperation<T> Read<T>(string blackboardKey)
         {
             if (_blackboardData.ContainsKey(blackboardKey))
-            {
                 try
                 {
-                    return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Success, (T) _blackboardData[blackboardKey]);
+                    return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Success,
+                        (T) _blackboardData[blackboardKey]);
                 }
                 catch (InvalidCastException e)
                 {
                     return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Failure, default);
                 }
-            }
 
             return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Failure, default);
         }
