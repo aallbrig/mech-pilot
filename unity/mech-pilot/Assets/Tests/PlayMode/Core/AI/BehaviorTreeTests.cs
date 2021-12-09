@@ -6,7 +6,7 @@ namespace Tests.PlayMode.Core.AI
 {
     public class BehaviorTreeTester : BehaviorTree
     {
-        public override void Tick(BehaviorTreeData context) {}
+        public override void Tick(BehaviorTreeContext context) {}
     }
 
     public class BehaviorTreeTests

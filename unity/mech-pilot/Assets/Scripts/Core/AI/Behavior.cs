@@ -4,14 +4,14 @@ namespace Core.AI
 {
     public enum BehaviorExecutionStatus
     {
+        Running,
         Success,
-        InProgress,
         Failure
     }
 
     public abstract class Behavior: ScriptableObject
     {
-        public abstract BehaviorExecutionStatus Execute(BehaviorTreeData context);
+        public abstract BehaviorExecutionStatus Execute(BehaviorTreeContext context);
 
         public Behavior Child { get; set; }
         public Behavior Sibling { get; set; }

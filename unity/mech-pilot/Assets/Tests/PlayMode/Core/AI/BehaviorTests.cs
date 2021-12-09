@@ -4,23 +4,32 @@ using UnityEngine;
 
 namespace Tests.PlayMode.Core.AI
 {
+    public class FakeBehaviorTree: IBehaviorTree
+    {
+        public void Tick(BehaviorTreeContext btContext) {}
+    }
+
+    public class SpyBehaviorTreeContext: BehaviorTreeContext
+    {
+        protected override IBehaviorTree BuildBehaviorTree() => new FakeBehaviorTree();
+    }
+
     public class BehaviorTester : Behavior
     {
         public BehaviorExecutionStatus desiredReturnStatus;
-        public override BehaviorExecutionStatus Execute(BehaviorTreeData context) => desiredReturnStatus;
+        public override BehaviorExecutionStatus Execute(BehaviorTreeContext context) => desiredReturnStatus;
     }
+
     public class BehaviorTests
     {
         [Test]
-        public void Behavior_CanBeEvaluated()
+        public void Behavior_CanBeRun()
         {
+            var spy = new GameObject().AddComponent<SpyBehaviorTreeContext>();
             var sut = ScriptableObject.CreateInstance<BehaviorTester>();
             sut.desiredReturnStatus = BehaviorExecutionStatus.Success;
 
-            var result = sut.Execute(new BehaviorTreeData
-            {
-                CurrentPlayTime = 0, GameObject = new GameObject()
-            });
+            var result = sut.Execute(spy);
 
             Assert.AreEqual(BehaviorExecutionStatus.Success, result);
         }

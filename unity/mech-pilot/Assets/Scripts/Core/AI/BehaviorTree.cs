@@ -4,15 +4,15 @@ namespace Core.AI
 {
     public abstract class BehaviorTree : ScriptableObject, IBehaviorTree
     {
-        public Behavior CurrentBehavior { get; set; }
+        private Behavior CurrentBehavior { get; set; }
 
-        public virtual void Tick(BehaviorTreeData context)
+        public virtual void Tick(BehaviorTreeContext context)
         {
             var status = CurrentBehavior.Execute(context);
 
             switch (status)
             {
-                case BehaviorExecutionStatus.InProgress:
+                case BehaviorExecutionStatus.Running:
                     break;
                 case BehaviorExecutionStatus.Success:
                     if (CurrentBehavior.Child) CurrentBehavior = CurrentBehavior.Child;
