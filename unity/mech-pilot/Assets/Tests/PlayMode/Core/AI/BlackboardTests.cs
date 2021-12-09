@@ -51,5 +51,20 @@ namespace Tests.PlayMode.Core.AI
 
             Assert.AreEqual(set, sut.AvailableKeys);
         }
+
+        [Test]
+        public void Blackboard_DataCanBeRemoved()
+        {
+            var sut = new Blackboard();
+            var key = "test-key";
+            var emptySet = new HashSet<string>();
+            sut.Write(key, new object());
+            Assert.NotNull(sut.Read(key).Data);
+
+            sut.Remove(key);
+
+            Assert.AreEqual(BlackboardOperationStatus.Failure, sut.Read(key).Status);
+            Assert.AreEqual(emptySet, sut.AvailableKeys);
+        }
     }
 }

@@ -56,6 +56,18 @@ namespace Core.AI
             return BlackboardCommandOperation.Of(BlackboardOperationStatus.Success);
         }
 
+        public BlackboardCommandOperation Remove(string blackboardKey)
+        {
+            if (_blackboardData.ContainsKey(blackboardKey))
+            {
+                AvailableKeys.Remove(blackboardKey);
+                _blackboardData.Remove(blackboardKey);
+                return BlackboardCommandOperation.Of(BlackboardOperationStatus.Success);
+            }
+
+            return BlackboardCommandOperation.Of(BlackboardOperationStatus.Failure);
+        }
+
         public BlackboardQueryOperation Read(string blackboardKey)
         {
             if (_blackboardData.ContainsKey(blackboardKey))
