@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 namespace Core.AI
 {
@@ -8,44 +9,60 @@ namespace Core.AI
         Failure
     }
 
-    public struct BlackboardCommandResult
+    public class BlackboardQueryOperation
     {
-        public BlackboardOperationStatus Status;
-        public object Data;
+        public static BlackboardQueryOperation Of(BlackboardOperationStatus status, object data)
+        {
+            return new BlackboardQueryOperation
+            {
+                Status = status, Data = data
+            };
+        }
+
+        private BlackboardQueryOperation() {}
+        public BlackboardOperationStatus Status { get; private set; }
+        public object Data { get; private set; }
+    }
+
+    public class BlackboardCommandOperation
+    {
+        public static BlackboardCommandOperation Of(BlackboardOperationStatus status) =>
+            new BlackboardCommandOperation
+            {
+                Status = status
+            };
+
+        private BlackboardCommandOperation() {}
+
+        public BlackboardOperationStatus Status { get; private set; }
     }
 
     public class Blackboard
     {
-        private readonly Dictionary<string, object> _blackboardData = new Dictionary<string, object>();
-
-        public BlackboardCommandResult Write(string blackboardKey, object blackboardValue)
+        public Blackboard()
         {
+            _blackboardData = new Dictionary<string, object>();
+            AvailableKeys = new HashSet<string>();
+        }
+
+        private readonly Dictionary<string, object> _blackboardData;
+        public readonly HashSet<string> AvailableKeys;
+
+        public BlackboardCommandOperation Write(string blackboardKey, object blackboardValue)
+        {
+            AvailableKeys.Add(blackboardKey);
             _blackboardData[blackboardKey] = blackboardValue;
 
-            return new BlackboardCommandResult
-            {
-                Status = BlackboardOperationStatus.Success,
-                Data = blackboardValue
-            };
+            return BlackboardCommandOperation.Of(BlackboardOperationStatus.Success);
         }
 
-        public BlackboardCommandResult Read(string blackboardKey)
+        public BlackboardQueryOperation Read(string blackboardKey)
         {
             if (_blackboardData.ContainsKey(blackboardKey))
-            {
-                return new BlackboardCommandResult
-                {
-                    Status = BlackboardOperationStatus.Success,
-                    Data = _blackboardData[blackboardKey]
-                };
-            }
+                return BlackboardQueryOperation.Of(BlackboardOperationStatus.Success, _blackboardData[blackboardKey]);
 
-            return new BlackboardCommandResult
-            {
-                Status = BlackboardOperationStatus.Failure
-            };
+            return BlackboardQueryOperation.Of(BlackboardOperationStatus.Failure, null);
         }
-
     }
 
 }
