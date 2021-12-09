@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine.AI;
 
 namespace Core.AI
 {
@@ -9,19 +9,15 @@ namespace Core.AI
         Failure
     }
 
-    public class BlackboardQueryOperation
+    public class BlackboardQueryOperation<T>
     {
-        public static BlackboardQueryOperation Of(BlackboardOperationStatus status, object data)
+        public BlackboardQueryOperation(BlackboardOperationStatus status, T data)
         {
-            return new BlackboardQueryOperation
-            {
-                Status = status, Data = data
-            };
+            Status = status; Data = data;
         }
 
-        private BlackboardQueryOperation() {}
         public BlackboardOperationStatus Status { get; private set; }
-        public object Data { get; private set; }
+        public T Data { get; private set; }
     }
 
     public class BlackboardCommandOperation
@@ -68,12 +64,29 @@ namespace Core.AI
             return BlackboardCommandOperation.Of(BlackboardOperationStatus.Failure);
         }
 
-        public BlackboardQueryOperation Read(string blackboardKey)
+        public BlackboardQueryOperation<object> Read(string blackboardKey)
         {
             if (_blackboardData.ContainsKey(blackboardKey))
-                return BlackboardQueryOperation.Of(BlackboardOperationStatus.Success, _blackboardData[blackboardKey]);
+                return new BlackboardQueryOperation<object>(BlackboardOperationStatus.Success, _blackboardData[blackboardKey]);
 
-            return BlackboardQueryOperation.Of(BlackboardOperationStatus.Failure, null);
+            return new BlackboardQueryOperation<object>(BlackboardOperationStatus.Failure, null);
+        }
+
+        public BlackboardQueryOperation<T> Read<T>(string blackboardKey)
+        {
+            if (_blackboardData.ContainsKey(blackboardKey))
+            {
+                try
+                {
+                    return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Success, (T) _blackboardData[blackboardKey]);
+                }
+                catch (InvalidCastException e)
+                {
+                    return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Failure, default);
+                }
+            }
+
+            return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Failure, default);
         }
     }
 
