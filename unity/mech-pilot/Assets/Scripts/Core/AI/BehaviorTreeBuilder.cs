@@ -16,6 +16,7 @@ namespace Core.AI
         {
             _behaviorTree = ScriptableObject.CreateInstance<BehaviorTree>();
         }
+
         public BehaviorTreeBuilder() {}
         public BehaviorTree Build()
         {

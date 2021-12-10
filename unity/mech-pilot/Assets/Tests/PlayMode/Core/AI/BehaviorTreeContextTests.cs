@@ -6,16 +6,17 @@ using UnityEngine.TestTools;
 
 namespace Tests.PlayMode.Core.AI
 {
-    public class BehaviorTreeSpy : IBehaviorTree
+    public class BehaviorTreeSpy : IBehaviorTree<BehaviorTreeContextTestBehaviour>
     {
-        public BehaviorTreeContext Context;
-        public void Tick(BehaviorTreeContext context) => Context = context;
+        public BehaviorTreeContextTestBehaviour Context;
+
+        public void Tick(BehaviorTreeContextTestBehaviour behaviorTreeContext) => Context = behaviorTreeContext;
     }
 
-    public class BehaviorTreeContextTestBehaviour : BehaviorTreeContext
+    public class BehaviorTreeContextTestBehaviour : BehaviorTreeContext<BehaviorTreeContextTestBehaviour>
     {
         public readonly BehaviorTreeSpy Spy = new BehaviorTreeSpy();
-        protected override IBehaviorTree BuildBehaviorTree() => Spy;
+        protected override IBehaviorTree<BehaviorTreeContextTestBehaviour> BuildBehaviorTree() => Spy;
     }
 
     public class BehaviorTreeContextTests

@@ -9,9 +9,19 @@ namespace Core.AI
         Failure
     }
 
-    public class BlackboardQueryOperation<T>
+    public class BlackboardQueryRequest
     {
-        public BlackboardQueryOperation(BlackboardOperationStatus status, T data)
+        public BlackboardQueryRequest(string key)
+        {
+            Key = key;
+        }
+
+        public string Key { get; }
+    }
+
+    public class BlackboardQueryResult<T>
+    {
+        public BlackboardQueryResult(BlackboardOperationStatus status, T data)
         {
             Status = status;
             Data = data;
@@ -24,7 +34,6 @@ namespace Core.AI
 
     public class BlackboardCommandOperation
     {
-
         private BlackboardCommandOperation() {}
 
         public BlackboardOperationStatus Status { get; private set; }
@@ -38,9 +47,9 @@ namespace Core.AI
 
     public class Blackboard
     {
-
         private readonly Dictionary<string, object> _blackboardData;
         public readonly HashSet<string> AvailableKeys;
+
         public Blackboard()
         {
             _blackboardData = new Dictionary<string, object>();
@@ -67,29 +76,33 @@ namespace Core.AI
             return BlackboardCommandOperation.Of(BlackboardOperationStatus.Failure);
         }
 
-        public BlackboardQueryOperation<object> Read(string blackboardKey)
+        public BlackboardQueryResult<object> Read(BlackboardQueryRequest request)
         {
-            if (_blackboardData.ContainsKey(blackboardKey))
-                return new BlackboardQueryOperation<object>(BlackboardOperationStatus.Success,
-                    _blackboardData[blackboardKey]);
+            if (_blackboardData.ContainsKey(request.Key))
+                return new BlackboardQueryResult<object>(
+                    BlackboardOperationStatus.Success,
+                    _blackboardData[request.Key]
+                );
 
-            return new BlackboardQueryOperation<object>(BlackboardOperationStatus.Failure, null);
+            return new BlackboardQueryResult<object>(BlackboardOperationStatus.Failure, null);
         }
 
-        public BlackboardQueryOperation<T> Read<T>(string blackboardKey)
+        public BlackboardQueryResult<T> Read<T>(BlackboardQueryRequest request)
         {
-            if (_blackboardData.ContainsKey(blackboardKey))
+            if (_blackboardData.ContainsKey(request.Key))
                 try
                 {
-                    return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Success,
-                        (T) _blackboardData[blackboardKey]);
+                    return new BlackboardQueryResult<T>(
+                        BlackboardOperationStatus.Success,
+                        (T) _blackboardData[request.Key]
+                    );
                 }
                 catch (InvalidCastException e)
                 {
-                    return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Failure, default);
+                    return new BlackboardQueryResult<T>(BlackboardOperationStatus.Failure, default);
                 }
 
-            return new BlackboardQueryOperation<T>(BlackboardOperationStatus.Failure, default);
+            return new BlackboardQueryResult<T>(BlackboardOperationStatus.Failure, default);
         }
     }
 

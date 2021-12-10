@@ -4,10 +4,7 @@ using UnityEngine;
 
 namespace Tests.PlayMode.Core.AI
 {
-    public class BehaviorTreeTester : BehaviorTree
-    {
-        public override void Tick(BehaviorTreeContext context) {}
-    }
+    public class BehaviorTreeTester : BehaviorTree {}
 
     public class BehaviorTreeTests
     {

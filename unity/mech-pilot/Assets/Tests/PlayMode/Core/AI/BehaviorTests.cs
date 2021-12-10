@@ -4,20 +4,20 @@ using UnityEngine;
 
 namespace Tests.PlayMode.Core.AI
 {
-    public class FakeBehaviorTree : IBehaviorTree
+    public class FakeBehaviorTree : IBehaviorTree<SpyBehaviorTreeContext>
     {
-        public void Tick(BehaviorTreeContext btContext) {}
+        public void Tick(SpyBehaviorTreeContext behaviorTreeContext) {}
     }
 
-    public class SpyBehaviorTreeContext : BehaviorTreeContext
+    public class SpyBehaviorTreeContext : BehaviorTreeContext<SpyBehaviorTreeContext>
     {
-        protected override IBehaviorTree BuildBehaviorTree() => new FakeBehaviorTree();
+        protected override IBehaviorTree<SpyBehaviorTreeContext> BuildBehaviorTree() => new FakeBehaviorTree();
     }
 
     public class BehaviorTester : Behavior
     {
         public BehaviorExecutionStatus desiredReturnStatus;
-        public override BehaviorExecutionStatus Execute(BehaviorTreeContext context) => desiredReturnStatus;
+        public BehaviorExecutionStatus Execute(SpyBehaviorTreeContext context) => desiredReturnStatus;
     }
 
     public class BehaviorTests

@@ -24,7 +24,7 @@ namespace Tests.PlayMode.Core.AI
             var key = "test-key";
             sut.Write(key, value);
 
-            var result = sut.Read(key);
+            var result = sut.Read(new BlackboardQueryRequest(key));
 
             Assert.AreEqual(BlackboardOperationStatus.Success, result.Status);
             Assert.AreEqual(value, result.Data);
@@ -59,11 +59,11 @@ namespace Tests.PlayMode.Core.AI
             var key = "test-key";
             var emptySet = new HashSet<string>();
             sut.Write(key, new object());
-            Assert.NotNull(sut.Read(key).Data);
+            Assert.NotNull(sut.Read(new BlackboardQueryRequest(key)).Data);
 
             sut.Remove(key);
 
-            Assert.AreEqual(BlackboardOperationStatus.Failure, sut.Read(key).Status);
+            Assert.AreEqual(BlackboardOperationStatus.Failure, sut.Read(new BlackboardQueryRequest(key)).Status);
             Assert.AreEqual(emptySet, sut.AvailableKeys);
         }
 
@@ -73,7 +73,9 @@ namespace Tests.PlayMode.Core.AI
             var sut = new Blackboard();
             var value = 1f;
             sut.Write("test-key", value);
-            var readOperation = sut.Read<float>("test-key");
+
+            var readOperation = sut.Read<float>(new BlackboardQueryRequest("test-key"));
+
             Assert.NotNull(readOperation.Data);
             Assert.AreEqual(value, readOperation.Data);
         }
