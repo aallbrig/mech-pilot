@@ -9,7 +9,7 @@ namespace Core.AI
         public void Tick(TContext context);
     }
 
-    public abstract class BehaviorTreeContext<TContext> : MonoBehaviour
+    public abstract class BehaviorTreeContextMB<TContext> : MonoBehaviour
     {
         public readonly Blackboard Blackboard = new Blackboard();
         private IBehaviorTree<TContext> _behaviorTree;
@@ -27,8 +27,6 @@ namespace Core.AI
 
             RebuildBehaviorTree();
             SetupDefaultBlackboardValues();
-
-            OnStart();
         }
 
         private void SetupDefaultBlackboardValues() => Blackboard.Write("GameObject", gameObject);
@@ -37,14 +35,11 @@ namespace Core.AI
         protected virtual void Update()
         {
             Blackboard.Write("CurrentPlayTime", Time.time);
-            OnUpdate();
         }
 
         public void Tick() => _behaviorTree.Tick(_self);
 
         // Extension point for subclasses
         protected abstract IBehaviorTree<TContext> BuildBehaviorTree();
-        protected virtual void OnStart() {}
-        protected virtual void OnUpdate() {}
     }
 }

@@ -6,33 +6,33 @@ using UnityEngine.TestTools;
 
 namespace Tests.PlayMode.Core.AI
 {
-    public class FakeBehavior: IBehavior<BehaviorTreeContextTestBehaviour>
+    public class FakeBehavior: IBehavior<BehaviorTreeContextMbTestBehaviour>
     {
         public BehaviorStatus Status { get; private set; }
 
-        public BehaviorStatus Execute(BehaviorTreeContextTestBehaviour context)
+        public BehaviorStatus Execute(BehaviorTreeContextMbTestBehaviour contextMb)
         {
             Status = BehaviorStatus.Success;
             return Status;
         }
     }
 
-    public class BehaviorTreeSpy : IBehaviorTree<BehaviorTreeContextTestBehaviour>
+    public class BehaviorTreeSpy : IBehaviorTree<BehaviorTreeContextMbTestBehaviour>
     {
         public BehaviorTreeSpy()
         {
             RootNode = new FakeBehavior();
         }
-        public BehaviorTreeContextTestBehaviour Context;
-        public IBehavior<BehaviorTreeContextTestBehaviour> RootNode { get; set; }
+        public BehaviorTreeContextMbTestBehaviour ContextMb;
+        public IBehavior<BehaviorTreeContextMbTestBehaviour> RootNode { get; set; }
 
-        public void Tick(BehaviorTreeContextTestBehaviour context) => Context = context;
+        public void Tick(BehaviorTreeContextMbTestBehaviour contextMb) => ContextMb = contextMb;
     }
 
-    public class BehaviorTreeContextTestBehaviour : BehaviorTreeContext<BehaviorTreeContextTestBehaviour>
+    public class BehaviorTreeContextMbTestBehaviour : BehaviorTreeContextMB<BehaviorTreeContextMbTestBehaviour>
     {
         public readonly BehaviorTreeSpy Spy = new BehaviorTreeSpy();
-        protected override IBehaviorTree<BehaviorTreeContextTestBehaviour> BuildBehaviorTree() => Spy;
+        protected override IBehaviorTree<BehaviorTreeContextMbTestBehaviour> BuildBehaviorTree() => Spy;
     }
 
     public class BehaviorTreeContextTests
@@ -40,19 +40,19 @@ namespace Tests.PlayMode.Core.AI
         [UnityTest]
         public IEnumerator BehaviorTreeContext_ContextIsPassedToBehaviorTree()
         {
-            var sut = new GameObject().AddComponent<BehaviorTreeContextTestBehaviour>();
+            var sut = new GameObject().AddComponent<BehaviorTreeContextMbTestBehaviour>();
             yield return null;
 
             sut.Tick();
 
-            Assert.NotNull(sut.Spy.Context);
-            Assert.AreSame(sut, sut.Spy.Context);
+            Assert.NotNull(sut.Spy.ContextMb);
+            Assert.AreSame(sut, sut.Spy.ContextMb);
         }
 
         [UnityTest]
         public IEnumerator BehaviorTreeContext_OffersBlackboardWithBasicData()
         {
-            var sut = new GameObject().AddComponent<BehaviorTreeContextTestBehaviour>();
+            var sut = new GameObject().AddComponent<BehaviorTreeContextMbTestBehaviour>();
 
             yield return new WaitForEndOfFrame();
 
@@ -62,9 +62,9 @@ namespace Tests.PlayMode.Core.AI
         [UnityTest]
         public IEnumerator BehaviorTreeContext_BlackboardIsUpdatedWithCurrentPlaytimeByDefault()
         {
-            var sut = new GameObject().AddComponent<BehaviorTreeContextTestBehaviour>();
-            Assert.IsFalse(sut.Blackboard.AvailableKeys.Contains("CurrentPlayTime"));
+            var sut = new GameObject().AddComponent<BehaviorTreeContextMbTestBehaviour>();
 
+            yield return new WaitForEndOfFrame();
             yield return new WaitForEndOfFrame();
             yield return new WaitForEndOfFrame();
 

@@ -14,7 +14,7 @@ namespace Controllers
         public void Move(float deltaTime);
     }
 
-    public class AgentController : BehaviorTreeContext<AgentController>, ILocomotion
+    public class AgentController : BehaviorTreeContextMB<AgentController>, ILocomotion
     {
         public AgentBehaviorTree agentBehaviorTree;
         public float thinkingRate = 0.25f;
