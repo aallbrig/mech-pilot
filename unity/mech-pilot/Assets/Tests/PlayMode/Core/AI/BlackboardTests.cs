@@ -63,7 +63,7 @@ namespace Tests.PlayMode.Core.AI
 
             sut.Remove(key);
 
-            Assert.AreEqual(BlackboardOperationStatus.Failure, sut.Read(new BlackboardQueryRequest(key)).Status);
+            Assert.AreEqual(BlackboardOperationStatus.FailureKeyNotFound, sut.Read(new BlackboardQueryRequest(key)).Status);
             Assert.AreEqual(emptySet, sut.AvailableKeys);
         }
 

@@ -6,7 +6,8 @@ namespace Core.AI
     public enum BlackboardOperationStatus
     {
         Success,
-        Failure
+        FailureTypecast,
+        FailureKeyNotFound
     }
 
     public class BlackboardQueryRequest
@@ -32,14 +33,14 @@ namespace Core.AI
         public T Data { get; }
     }
 
-    public class BlackboardCommandOperation
+    public class BlackboardCommandResult
     {
-        private BlackboardCommandOperation() {}
+        private BlackboardCommandResult() {}
 
         public BlackboardOperationStatus Status { get; private set; }
 
-        public static BlackboardCommandOperation Of(BlackboardOperationStatus status) =>
-            new BlackboardCommandOperation
+        public static BlackboardCommandResult Of(BlackboardOperationStatus status) =>
+            new BlackboardCommandResult
             {
                 Status = status
             };
@@ -56,24 +57,24 @@ namespace Core.AI
             AvailableKeys = new HashSet<string>();
         }
 
-        public BlackboardCommandOperation Write(string blackboardKey, object blackboardValue)
+        public BlackboardCommandResult Write(string blackboardKey, object blackboardValue)
         {
             AvailableKeys.Add(blackboardKey);
             _blackboardData[blackboardKey] = blackboardValue;
 
-            return BlackboardCommandOperation.Of(BlackboardOperationStatus.Success);
+            return BlackboardCommandResult.Of(BlackboardOperationStatus.Success);
         }
 
-        public BlackboardCommandOperation Remove(string blackboardKey)
+        public BlackboardCommandResult Remove(string blackboardKey)
         {
             if (_blackboardData.ContainsKey(blackboardKey))
             {
                 AvailableKeys.Remove(blackboardKey);
                 _blackboardData.Remove(blackboardKey);
-                return BlackboardCommandOperation.Of(BlackboardOperationStatus.Success);
+                return BlackboardCommandResult.Of(BlackboardOperationStatus.Success);
             }
 
-            return BlackboardCommandOperation.Of(BlackboardOperationStatus.Failure);
+            return BlackboardCommandResult.Of(BlackboardOperationStatus.FailureKeyNotFound);
         }
 
         public BlackboardQueryResult<object> Read(BlackboardQueryRequest request)
@@ -84,7 +85,7 @@ namespace Core.AI
                     _blackboardData[request.Key]
                 );
 
-            return new BlackboardQueryResult<object>(BlackboardOperationStatus.Failure, null);
+            return new BlackboardQueryResult<object>(BlackboardOperationStatus.FailureKeyNotFound, null);
         }
 
         public BlackboardQueryResult<T> Read<T>(BlackboardQueryRequest request)
@@ -99,10 +100,10 @@ namespace Core.AI
                 }
                 catch (InvalidCastException e)
                 {
-                    return new BlackboardQueryResult<T>(BlackboardOperationStatus.Failure, default);
+                    return new BlackboardQueryResult<T>(BlackboardOperationStatus.FailureTypecast, default);
                 }
 
-            return new BlackboardQueryResult<T>(BlackboardOperationStatus.Failure, default);
+            return new BlackboardQueryResult<T>(BlackboardOperationStatus.FailureKeyNotFound, default);
         }
     }
 
