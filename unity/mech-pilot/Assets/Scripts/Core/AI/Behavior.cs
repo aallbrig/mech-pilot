@@ -1,25 +1,18 @@
-using UnityEngine;
+using System;
 
 namespace Core.AI
 {
-    public enum BehaviorExecutionStatus
-    {
-        Running,
-        Success,
-        Failure
-    }
-
-    public interface Behavior<T>
+    public interface IBehavior<T>
     {
         public abstract BehaviorExecutionStatus Execute(T context);
     }
 
-    public abstract class Behavior : ScriptableObject
+    [Serializable]
+    public enum BehaviorExecutionStatus
     {
-        // public Behavior Child { get; set; }
-
-        // public Behavior Sibling { get; set; }
-
-        // public abstract BehaviorExecutionStatus Execute(MissingType context);
+        Clean,
+        Running,
+        Success,
+        Failure
     }
 }
