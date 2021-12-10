@@ -20,9 +20,9 @@ namespace Core.AI
         public string Key { get; }
     }
 
-    public class BlackboardQueryResult<T>
+    public class BlackboardQueryResult<TData>
     {
-        public BlackboardQueryResult(BlackboardOperationStatus status, T data)
+        public BlackboardQueryResult(BlackboardOperationStatus status, TData data)
         {
             Status = status;
             Data = data;
@@ -30,7 +30,7 @@ namespace Core.AI
 
         public BlackboardOperationStatus Status { get; }
 
-        public T Data { get; }
+        public TData Data { get; }
     }
 
     public class BlackboardCommandResult
@@ -98,7 +98,7 @@ namespace Core.AI
                         (T) _blackboardData[request.Key]
                     );
                 }
-                catch (InvalidCastException e)
+                catch
                 {
                     return new BlackboardQueryResult<T>(BlackboardOperationStatus.FailureTypecast, default);
                 }
@@ -106,5 +106,4 @@ namespace Core.AI
             return new BlackboardQueryResult<T>(BlackboardOperationStatus.FailureKeyNotFound, default);
         }
     }
-
 }

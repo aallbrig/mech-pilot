@@ -12,7 +12,7 @@ namespace Tests.PlayMode.Core.AI
         {
             var behaviorProvider = new NoopBehaviorProvider();
             var behaviorTree = new NoopBehaviorTree();
-            var sut = new BehaviorTreeBuilder<MonoBehaviour, NoopBehavior>(behaviorProvider, behaviorTree);
+            var sut = new BehaviorTreeBuilder<MonoBehaviour>(behaviorProvider, behaviorTree);
 
             var result = sut.Build();
 

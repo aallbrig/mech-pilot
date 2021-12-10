@@ -2,46 +2,54 @@ using UnityEngine;
 
 namespace Core.AI
 {
-    public interface IBehaviorProvider<B>
+    public interface IBehaviorProvider<TContext>
     {
         // A provider should provide types of behaviors
         // e.g. action, decorator, sequences, filters/preconditions,
         // selectors,
-        public B Root();
+        public IBehavior<TContext> Root();
     }
 
     public class NoopBehavior: IBehavior<MonoBehaviour>
     {
-        private BehaviorExecutionStatus _status;
-        public NoopBehavior(BehaviorExecutionStatus status = BehaviorExecutionStatus.Success) => _status = status;
+        private BehaviorStatus _status;
         
-        public BehaviorExecutionStatus Execute(MonoBehaviour context) => _status;
+        public NoopBehavior(BehaviorStatus status = BehaviorStatus.Success) => _status = status;
+
+        public BehaviorStatus Status { get; private set; }
+
+        public BehaviorStatus Execute(MonoBehaviour context)
+        {
+            Status = _status;
+            return Status;
+        }
     }
 
-    public class NoopBehaviorProvider : IBehaviorProvider<NoopBehavior>
+    public class NoopBehaviorProvider : IBehaviorProvider<MonoBehaviour>
     {
-        public NoopBehavior Root() => new NoopBehavior();
+        public IBehavior<MonoBehaviour> Root() => new NoopBehavior();
     }
 
-    public class NoopBehaviorTree : IBehaviorTree<MonoBehaviour, NoopBehavior>
+    public class NoopBehaviorTree : IBehaviorTree<MonoBehaviour>
     {
-        public NoopBehavior RootNode { get; set; }
+        public IBehavior<MonoBehaviour> RootNode { get; set; }
 
-        public void Tick(MonoBehaviour behaviorTreeContext) {}
+        public void Tick(MonoBehaviour context) {}
     }
 
-    public class BehaviorTreeBuilder<Cxt, B>
+    public class BehaviorTreeBuilder<TContext>
     {
-        private readonly IBehaviorProvider<B> _behaviorProvider;
-        private readonly IBehaviorTree<Cxt, B> _behaviorTree;
+        private readonly IBehaviorProvider<TContext> _behaviorProvider;
+        private readonly IBehaviorTree<TContext> _behaviorTree;
 
-        public BehaviorTreeBuilder(IBehaviorProvider<B> behaviorProvider, IBehaviorTree<Cxt, B> behaviorTree)
+        public BehaviorTreeBuilder(IBehaviorProvider<TContext> behaviorProvider, IBehaviorTree<TContext> behaviorTree)
         {
             _behaviorProvider = behaviorProvider;
             _behaviorTree = behaviorTree;
-            if (_behaviorTree.RootNode == null) _behaviorTree.RootNode = _behaviorProvider.Root();
+
+            _behaviorTree.RootNode ??= _behaviorProvider.Root();
         }
 
-        public IBehaviorTree<Cxt, B> Build() => _behaviorTree;
+        public IBehaviorTree<TContext> Build() => _behaviorTree;
     }
 }

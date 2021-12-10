@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b5aa7afbf2944a8a8109e942f2baed3, type: 3}
-  m_Name: Generic Mech Behavior Tree
+  m_Script: {fileID: 11500000, guid: f963b2d263bb433ba6568ef8c0bd436d, type: 3}
+  m_Name: Move
   m_EditorClassIdentifier: 
-  rootNode: {fileID: 11400000, guid: 84d8f98ecf3b8441888594220776d935, type: 2}
+  speed: 1
+  withinRange: 1.5

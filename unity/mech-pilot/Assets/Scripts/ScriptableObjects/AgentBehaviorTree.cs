@@ -5,16 +5,18 @@ using UnityEngine;
 namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New agent behavior tree", menuName = "BehaviorTrees/AgentBT", order = 0)]
-    public class AgentBehaviorTree : ScriptableObject, IBehaviorTree<AgentController, AgentBehavior>
+    public class AgentBehaviorTree : ScriptableObject, IBehaviorTree<AgentController>
     {
         public AgentBehavior rootNode;
-        public AgentBehavior RootNode { get; set; }
+        public IBehavior<AgentController> RootNode { get; set; }
 
-        private AgentBehavior currentNode;
+        private AgentBehavior _currentNode;
 
-        public void Tick(AgentController behaviorTreeContext)
+        public void Tick(AgentController context)
         {
-            if (currentNode == null) currentNode = RootNode;
+            if (_currentNode == null) _currentNode = (AgentBehavior) RootNode;
+            var status = _currentNode.Execute(context);
+            Debug.Log($"Status: {status}");
         }
 
         private void OnEnable() => RootNode = rootNode;

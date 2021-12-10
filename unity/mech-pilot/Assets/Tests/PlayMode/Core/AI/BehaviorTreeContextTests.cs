@@ -6,19 +6,33 @@ using UnityEngine.TestTools;
 
 namespace Tests.PlayMode.Core.AI
 {
-    public class FakeBehavior {}
-
-    public class BehaviorTreeSpy : IBehaviorTree<BehaviorTreeContextTestBehaviour, FakeBehavior>
+    public class FakeBehavior: IBehavior<BehaviorTreeContextTestBehaviour>
     {
-        public BehaviorTreeContextTestBehaviour Context;
-        public FakeBehavior RootNode { get; set; }
-        public void Tick(BehaviorTreeContextTestBehaviour behaviorTreeContext) => Context = behaviorTreeContext;
+        public BehaviorStatus Status { get; private set; }
+
+        public BehaviorStatus Execute(BehaviorTreeContextTestBehaviour context)
+        {
+            Status = BehaviorStatus.Success;
+            return Status;
+        }
     }
 
-    public class BehaviorTreeContextTestBehaviour : BehaviorTreeContext<BehaviorTreeContextTestBehaviour, FakeBehavior>
+    public class BehaviorTreeSpy : IBehaviorTree<BehaviorTreeContextTestBehaviour>
+    {
+        public BehaviorTreeSpy()
+        {
+            RootNode = new FakeBehavior();
+        }
+        public BehaviorTreeContextTestBehaviour Context;
+        public IBehavior<BehaviorTreeContextTestBehaviour> RootNode { get; set; }
+
+        public void Tick(BehaviorTreeContextTestBehaviour context) => Context = context;
+    }
+
+    public class BehaviorTreeContextTestBehaviour : BehaviorTreeContext<BehaviorTreeContextTestBehaviour>
     {
         public readonly BehaviorTreeSpy Spy = new BehaviorTreeSpy();
-        protected override IBehaviorTree<BehaviorTreeContextTestBehaviour, FakeBehavior> BuildBehaviorTree() => Spy;
+        protected override IBehaviorTree<BehaviorTreeContextTestBehaviour> BuildBehaviorTree() => Spy;
     }
 
     public class BehaviorTreeContextTests
@@ -49,10 +63,9 @@ namespace Tests.PlayMode.Core.AI
         public IEnumerator BehaviorTreeContext_BlackboardIsUpdatedWithCurrentPlaytimeByDefault()
         {
             var sut = new GameObject().AddComponent<BehaviorTreeContextTestBehaviour>();
+            Assert.IsFalse(sut.Blackboard.AvailableKeys.Contains("CurrentPlayTime"));
 
             yield return new WaitForEndOfFrame();
-            // The frame of initialization does not run the "Update" behavior
-            Assert.IsFalse(sut.Blackboard.AvailableKeys.Contains("CurrentPlayTime"));
             yield return new WaitForEndOfFrame();
 
             Assert.IsTrue(sut.Blackboard.AvailableKeys.Contains("CurrentPlayTime"));
