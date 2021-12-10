@@ -48,27 +48,5 @@ namespace Tests.PlayMode.Core.AI
             Assert.NotNull(sut.Spy.ContextMb);
             Assert.AreSame(sut, sut.Spy.ContextMb);
         }
-
-        [UnityTest]
-        public IEnumerator BehaviorTreeContext_OffersBlackboardWithBasicData()
-        {
-            var sut = new GameObject().AddComponent<BehaviorTreeContextMbTestBehaviour>();
-
-            yield return new WaitForEndOfFrame();
-
-            Assert.IsTrue(sut.Blackboard.AvailableKeys.Contains("GameObject"));
-        }
-
-        [UnityTest]
-        public IEnumerator BehaviorTreeContext_BlackboardIsUpdatedWithCurrentPlaytimeByDefault()
-        {
-            var sut = new GameObject().AddComponent<BehaviorTreeContextMbTestBehaviour>();
-
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-
-            Assert.IsTrue(sut.Blackboard.AvailableKeys.Contains("CurrentPlayTime"));
-        }
     }
 }
