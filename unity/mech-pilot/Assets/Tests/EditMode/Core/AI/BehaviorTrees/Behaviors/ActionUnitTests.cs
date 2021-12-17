@@ -1,6 +1,6 @@
+using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
 using NUnit.Framework;
-using Action = Core.AI.BehaviorTrees.Behaviors.Action;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
 {
@@ -18,7 +18,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var sut = new Action(spyAction);
 
             sut.Tick();
-            
+
             Assert.IsTrue(spyCalled);
         }
 
@@ -33,7 +33,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
 
             Assert.IsTrue(spyCalled);
         }
-        
+
         [Test]
         public void ActionBehaviors_OptionallyAllowCustomTeardownLogic()
         {
@@ -42,7 +42,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var sut = new Action(() => Behavior.Status.Success, null, spyTeardown);
 
             sut.Tick();
-            
+
             Assert.IsTrue(spyCalled);
         }
     }

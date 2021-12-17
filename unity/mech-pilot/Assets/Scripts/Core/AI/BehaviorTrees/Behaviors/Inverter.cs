@@ -2,13 +2,10 @@ using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
-    public class Inverter: Decorator
+    public class Inverter : Decorator
     {
         private readonly Behavior _child;
-        public Inverter(Behavior child)
-        {
-            _child = child;
-        }
+        public Inverter(Behavior child) => _child = child;
 
         public override void Initialize() {}
         public override Status Execute()

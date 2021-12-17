@@ -2,7 +2,6 @@ using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
 using NUnit.Framework;
 using Tests.EditMode.Core.AI.TestDoubles;
-using UnityEditor;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
 {
@@ -15,7 +14,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var sut = new Inverter(spy);
 
             sut.Tick();
-            
+
             Assert.AreEqual(Behavior.Status.Success, sut.CurrentStatus);
         }
 
@@ -26,7 +25,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var sut = new Inverter(spy);
 
             sut.Tick();
-            
+
             Assert.AreEqual(Behavior.Status.Failure, sut.CurrentStatus);
         }
 

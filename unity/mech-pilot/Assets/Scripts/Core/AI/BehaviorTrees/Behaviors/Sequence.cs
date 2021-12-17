@@ -3,12 +3,9 @@ using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
-    public class Sequence: Composite
+    public class Sequence : Composite
     {
-        public Sequence(List<Behavior> children)
-        {
-            Children = children;
-        }
+        public Sequence(List<Behavior> children) => Children = children;
 
         public override Status Execute()
         {

@@ -7,9 +7,6 @@ namespace Core.AI.BehaviorTrees.Behaviors.BuildingBlocks
         protected List<Behavior> Children;
         protected int CurrentIndex;
 
-        public override void Initialize()
-        {
-            CurrentIndex = 0;
-        }
+        public override void Initialize() => CurrentIndex = 0;
     }
 }

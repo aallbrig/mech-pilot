@@ -2,10 +2,12 @@ using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
-    public class Action: Behavior
+    public class Action : Behavior
     {
         public delegate Status ActionCommand();
+
         public delegate void ActionSetup();
+
         public delegate void ActionTeardown();
 
         private readonly ActionCommand _action;

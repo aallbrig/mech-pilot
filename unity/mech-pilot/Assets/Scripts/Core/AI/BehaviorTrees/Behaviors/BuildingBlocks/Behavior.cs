@@ -3,7 +3,13 @@ namespace Core.AI.BehaviorTrees.Behaviors.BuildingBlocks
 
     public abstract class Behavior
     {
-        public enum Status { Invalid, Running, Success, Failure }
+        public enum Status
+        {
+            Invalid,
+            Running,
+            Success,
+            Failure
+        }
 
         public Status CurrentStatus { get; protected set; }
 
