@@ -19,12 +19,8 @@ namespace Core.AI
         Failure
     }
 
-    public abstract class Behavior<T>: IBehavior<T>
-    {
-        public abstract BehaviorStatus Status { get; }
-        public abstract BehaviorStatus Execute(T context);
-    }
-
+    // Should the core package define the scriptable object,
+    // or is a scriptable object just a concrete impl of the abstract interface?
     public abstract class BehaviorSO<T> : ScriptableObject, IBehavior<T>
     {
         public abstract BehaviorStatus Status { get; set; }
