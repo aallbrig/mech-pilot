@@ -13,6 +13,7 @@ namespace Core.AI.BehaviorTrees.Behaviors
         private readonly ActionCommand _action;
         private readonly ActionSetup _setup;
         private readonly ActionTeardown _teardown;
+
         public Action(ActionCommand action, ActionSetup setup = null, ActionTeardown teardown = null)
         {
             _action = action;
