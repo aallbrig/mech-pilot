@@ -4,12 +4,12 @@ using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees
 {
-    public class BehaviorTreeBuilder
+    public class BehaviorTreeBuilder: IProvideBehaviorTree
     {
         private Behavior _rootNode;
         private Behavior _currentBehavior;
 
-        private void AssignRootIfCurrentNodeExists()
+        private void AssignRootIfUndefined()
         {
             if (_rootNode == default && _currentBehavior != default)
             {
@@ -25,7 +25,7 @@ namespace Core.AI.BehaviorTrees
 
         public BehaviorTreeBuilder SelectorEnd()
         {
-            AssignRootIfCurrentNodeExists();
+            AssignRootIfUndefined();
             return this;
         }
 
@@ -41,5 +41,15 @@ namespace Core.AI.BehaviorTrees
         public BehaviorTree Build() =>
             // I choose to allow empty "build" by declaring that this method can return null
             _rootNode == default ? null : new BehaviorTree(_rootNode);
+        public BehaviorTreeBuilder SequenceStart()
+        {
+            _currentBehavior = new Sequence(new List<Behavior>());
+            return this;
+        }
+        public BehaviorTreeBuilder SequenceEnd()
+        {
+            AssignRootIfUndefined();
+            return this;
+        }
     }
 }

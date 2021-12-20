@@ -33,5 +33,22 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees
             Assert.IsTrue(result.RootBehavior is Selector);
             Assert.AreEqual(3, ((Selector)result.RootBehavior).ChildrenCount());
         }
+
+        [Test]
+        public void BTBuilder_CanBuildSequencesAndAddChildren()
+        {
+            var sut = new BehaviorTreeBuilder();
+
+            var result = sut
+                .SequenceStart()
+                    .AddChild(new BehaviorFake())
+                    .AddChild(new BehaviorFake())
+                    .AddChild(new BehaviorFake())
+                .SequenceEnd()
+                .Build();
+
+            Assert.IsTrue(result.RootBehavior is Sequence);
+            Assert.AreEqual(3, ((Sequence)result.RootBehavior).ChildrenCount());
+        }
     }
 }
