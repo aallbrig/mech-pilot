@@ -4,8 +4,8 @@ namespace Tests.EditMode.Core.AI.TestDoubles
 {
     public class BehaviorFake: Behavior
     {
-        public override void Initialize() {}
-        public override Status Execute() => Behavior.Status.Success;
-        public override void Terminate() {}
+        protected override void Initialize() {}
+        protected override Status Execute() => Behavior.Status.Success;
+        protected override void Terminate() {}
     }
 }

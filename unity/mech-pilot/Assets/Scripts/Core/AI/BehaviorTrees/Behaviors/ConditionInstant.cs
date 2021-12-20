@@ -7,20 +7,17 @@ namespace Core.AI.BehaviorTrees.Behaviors
     {
         private readonly Func<bool> _predicate;
 
-        public ConditionInstant(Behavior child, Func<bool> predicate)
-        {
-            Child = child;
+        public ConditionInstant(Behavior child, Func<bool> predicate) : base(child) =>
             _predicate = predicate;
-        }
 
-        public override void Initialize() {}
-        public override Status Execute()
+        protected override void Initialize() {}
+        protected override Status Execute()
         {
             var result = _predicate.Invoke();
             CurrentStatus = result ? Child.Tick() : Status.Failure;
 
             return CurrentStatus;
         }
-        public override void Terminate() {}
+        protected override void Terminate() {}
     }
 }

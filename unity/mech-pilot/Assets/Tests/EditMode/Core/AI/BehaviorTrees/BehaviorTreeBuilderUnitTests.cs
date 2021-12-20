@@ -1,5 +1,7 @@
 using Core.AI.BehaviorTrees;
+using Core.AI.BehaviorTrees.Behaviors;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.TestDoubles;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees
 {
@@ -13,6 +15,23 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees
             var result = sut.Build();
 
             Assert.IsNull(result);
+        }
+
+        [Test]
+        public void BTBuilder_CanBuildSelectorsAndAddChildren()
+        {
+            var sut = new BehaviorTreeBuilder();
+
+            var result = sut
+                .SelectorStart()
+                    .AddChild(new BehaviorFake())
+                    .AddChild(new BehaviorFake())
+                    .AddChild(new BehaviorFake())
+                .SelectorEnd()
+                .Build();
+
+            Assert.IsTrue(result.RootBehavior is Selector);
+            Assert.AreEqual(3, ((Selector)result.RootBehavior).ChildrenCount());
         }
     }
 }

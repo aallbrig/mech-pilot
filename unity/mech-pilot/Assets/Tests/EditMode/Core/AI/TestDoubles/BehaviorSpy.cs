@@ -12,15 +12,15 @@ namespace Tests.EditMode.Core.AI.TestDoubles
         public bool TerminateMethodCalled;
         public BehaviorSpy(Status desiredExecuteStatus) => _desiredExecuteStatus = desiredExecuteStatus;
 
-        public override Status Execute()
+        protected override Status Execute()
         {
             ExecuteMethodCalled = true;
             CurrentStatus = _desiredExecuteStatus;
             return CurrentStatus;
         }
 
-        public override void Terminate() => TerminateMethodCalled = true;
+        protected override void Terminate() => TerminateMethodCalled = true;
 
-        public override void Initialize() => InitializeMethodCalled = true;
+        protected override void Initialize() => InitializeMethodCalled = true;
     }
 }

@@ -21,14 +21,14 @@ namespace Core.AI.BehaviorTrees.Behaviors
             _teardown = teardown;
         }
 
-        public override void Initialize() => _setup?.Invoke();
+        protected override void Initialize() => _setup?.Invoke();
 
-        public override Status Execute()
+        protected override Status Execute()
         {
             CurrentStatus = _action.Invoke();
             return CurrentStatus;
         }
 
-        public override void Terminate() => _teardown?.Invoke();
+        protected override void Terminate() => _teardown?.Invoke();
     }
 }

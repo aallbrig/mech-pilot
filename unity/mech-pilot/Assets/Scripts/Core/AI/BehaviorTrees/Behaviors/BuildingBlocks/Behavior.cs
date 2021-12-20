@@ -3,19 +3,19 @@ namespace Core.AI.BehaviorTrees.Behaviors.BuildingBlocks
 
     public abstract class Behavior
     {
+        // Order matters. Don't have "Running" at the top of the list of statuses
         public enum Status
         {
-            Invalid,
-            Running,
             Success,
-            Failure
+            Failure,
+            Running
         }
 
         public Status CurrentStatus { get; protected set; }
 
-        public abstract void Initialize();
-        public abstract Status Execute();
-        public abstract void Terminate();
+        protected abstract void Initialize();
+        protected abstract Status Execute();
+        protected abstract void Terminate();
 
         public Status Tick()
         {

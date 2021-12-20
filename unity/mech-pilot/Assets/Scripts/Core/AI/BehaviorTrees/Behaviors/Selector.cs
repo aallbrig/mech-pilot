@@ -5,9 +5,9 @@ namespace Core.AI.BehaviorTrees.Behaviors
 {
     public class Selector : Composite
     {
-        public Selector(List<Behavior> children) => Children = children;
+        public Selector(List<Behavior> children) : base(children) {}
 
-        public override Status Execute()
+        protected override Status Execute()
         {
             var currentChild = Children[CurrentIndex];
             var childStatus = currentChild.Tick();
@@ -20,6 +20,6 @@ namespace Core.AI.BehaviorTrees.Behaviors
             return CurrentStatus;
         }
 
-        public override void Terminate() {}
+        protected override void Terminate() {}
     }
 }

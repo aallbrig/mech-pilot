@@ -5,9 +5,9 @@ namespace Core.AI.BehaviorTrees.Behaviors
 {
     public class Sequence : Composite
     {
-        public Sequence(List<Behavior> children) => Children = children;
+        public Sequence(List<Behavior> children) : base(children) {}
 
-        public override Status Execute()
+        protected override Status Execute()
         {
             var child = Children[CurrentIndex];
             var childStatus = child.Tick();
@@ -20,6 +20,6 @@ namespace Core.AI.BehaviorTrees.Behaviors
             return CurrentStatus;
         }
 
-        public override void Terminate() {}
+        protected override void Terminate() {}
     }
 }

@@ -5,6 +5,7 @@ namespace Core.AI.BehaviorTrees
 {
     public class BehaviorTree
     {
+        public Behavior RootBehavior => _rootNode;
         private readonly Behavior _rootNode;
         private Behavior _currentNode;
         public BehaviorTree(Behavior rootNode) =>

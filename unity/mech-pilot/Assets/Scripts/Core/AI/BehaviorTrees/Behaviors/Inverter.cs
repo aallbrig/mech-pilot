@@ -4,13 +4,12 @@ namespace Core.AI.BehaviorTrees.Behaviors
 {
     public class Inverter : Decorator
     {
-        private readonly Behavior _child;
-        public Inverter(Behavior child) => _child = child;
+        public Inverter(Behavior child) : base(child) {}
 
-        public override void Initialize() {}
-        public override Status Execute()
+        protected override void Initialize() {}
+        protected override Status Execute()
         {
-            var childStatus = _child.Tick();
+            var childStatus = Child.Tick();
             switch (childStatus)
             {
                 case Status.Success:
@@ -25,6 +24,6 @@ namespace Core.AI.BehaviorTrees.Behaviors
             }
             return CurrentStatus;
         }
-        public override void Terminate() {}
+        protected override void Terminate() {}
     }
 }
