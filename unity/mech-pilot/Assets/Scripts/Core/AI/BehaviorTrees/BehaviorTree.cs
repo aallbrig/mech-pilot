@@ -5,8 +5,8 @@ namespace Core.AI.BehaviorTrees
 {
     public class BehaviorTree
     {
-        private Behavior _currentNode;
         private readonly Behavior _rootNode;
+        private Behavior _currentNode;
         public BehaviorTree(Behavior rootNode) =>
             // The root node can't be a leaf node?
             // Or is the concept of having the root node be composite very important?

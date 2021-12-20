@@ -3,9 +3,9 @@ using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
-    public class ConditionInstant: Behavior
+    public class ConditionInstant : Behavior
     {
-        private Func<bool> _predicate;
+        private readonly Func<bool> _predicate;
 
         public ConditionInstant(Func<bool> predicate) => _predicate = predicate;
 
