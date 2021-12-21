@@ -1,6 +1,6 @@
 using System;
 using Core.AI.BehaviorTrees.Behaviors;
-using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
+using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors

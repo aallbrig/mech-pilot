@@ -1,8 +1,8 @@
-using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
+using Core.AI.BehaviorTrees.BuildingBlocks;
 
 namespace Tests.EditMode.Core.AI.TestDoubles
 {
-    public class BehaviorFake: Behavior
+    public class BehaviorFake : Behavior
     {
         protected override void Initialize() {}
         protected override Status Execute() => Status.Success;

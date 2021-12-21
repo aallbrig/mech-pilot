@@ -1,4 +1,4 @@
-using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
+using Core.AI.BehaviorTrees.BuildingBlocks;
 
 namespace Tests.EditMode.Core.AI.TestDoubles
 {

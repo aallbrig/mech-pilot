@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.AI.BehaviorTrees.Behaviors.BuildingBlocks
+namespace Core.AI.BehaviorTrees.BuildingBlocks
 {
     public abstract class Decorator : Behavior, IAddChild
     {
@@ -9,9 +9,6 @@ namespace Core.AI.BehaviorTrees.Behaviors.BuildingBlocks
             // A child is required to exist
             Child = child ?? throw new ArgumentNullException(nameof(child));
 
-        public void AddChild(Behavior childBehavior)
-        {
-            Child = childBehavior;
-        }
+        public void AddChild(Behavior childBehavior) => Child = childBehavior;
     }
 }

@@ -1,4 +1,4 @@
-using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
+using Core.AI.BehaviorTrees.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
@@ -6,7 +6,6 @@ namespace Core.AI.BehaviorTrees.Behaviors
     {
         public Inverter(Behavior child) : base(child) {}
 
-        protected override void Initialize() {}
         protected override Status Execute()
         {
             var childStatus = Child.Tick();
@@ -24,6 +23,5 @@ namespace Core.AI.BehaviorTrees.Behaviors
             }
             return CurrentStatus;
         }
-        protected override void Terminate() {}
     }
 }

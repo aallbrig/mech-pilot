@@ -1,20 +1,22 @@
 using System.Collections.Generic;
 using Core.AI.BehaviorTrees.Behaviors;
-using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
+using Core.AI.BehaviorTrees.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees
 {
-    public class BehaviorTreeBuilder: IProvideBehaviorTree
+    public class BehaviorTreeBuilder : IProvideBehaviorTree
     {
-        private Behavior _rootNode;
         private Behavior _currentBehavior;
+        private Behavior _rootNode;
+
+        public BehaviorTree Build() =>
+            // I choose to allow empty "build" by declaring that this method can return null
+            _rootNode == default ? null : new BehaviorTree(_rootNode);
 
         private void AssignRootIfUndefined()
         {
             if (_rootNode == default && _currentBehavior != default)
-            {
                 _rootNode = _currentBehavior;
-            }
         }
 
         public BehaviorTreeBuilder SelectorStart()
@@ -37,10 +39,6 @@ namespace Core.AI.BehaviorTrees
 
             return this;
         }
-
-        public BehaviorTree Build() =>
-            // I choose to allow empty "build" by declaring that this method can return null
-            _rootNode == default ? null : new BehaviorTree(_rootNode);
         public BehaviorTreeBuilder SequenceStart()
         {
             _currentBehavior = new Sequence(new List<Behavior>());

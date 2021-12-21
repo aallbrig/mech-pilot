@@ -1,4 +1,4 @@
-namespace Core.AI.BehaviorTrees.Behaviors.BuildingBlocks
+namespace Core.AI.BehaviorTrees.BuildingBlocks
 {
 
     public abstract class Behavior
@@ -13,9 +13,9 @@ namespace Core.AI.BehaviorTrees.Behaviors.BuildingBlocks
 
         public Status CurrentStatus { get; protected set; }
 
-        protected abstract void Initialize();
+        protected virtual void Initialize() {}
         protected abstract Status Execute();
-        protected abstract void Terminate();
+        protected virtual void Terminate() {}
 
         public Status Tick()
         {

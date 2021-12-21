@@ -1,5 +1,5 @@
 using System;
-using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
+using Core.AI.BehaviorTrees.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
@@ -10,7 +10,6 @@ namespace Core.AI.BehaviorTrees.Behaviors
         public ConditionInstant(Func<bool> predicate) =>
             _predicate = predicate;
 
-        protected override void Initialize() {}
         protected override Status Execute()
         {
             var result = _predicate.Invoke();
@@ -18,6 +17,5 @@ namespace Core.AI.BehaviorTrees.Behaviors
 
             return CurrentStatus;
         }
-        protected override void Terminate() {}
     }
 }

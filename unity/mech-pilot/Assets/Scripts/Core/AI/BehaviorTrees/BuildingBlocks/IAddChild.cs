@@ -1,4 +1,4 @@
-namespace Core.AI.BehaviorTrees.Behaviors.BuildingBlocks
+namespace Core.AI.BehaviorTrees.BuildingBlocks
 {
     public interface IAddChild
     {

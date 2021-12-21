@@ -1,5 +1,5 @@
 using Core.AI.BehaviorTrees.Behaviors;
-using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
+using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
 using Tests.EditMode.Core.AI.TestDoubles;
 

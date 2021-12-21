@@ -1,10 +1,10 @@
-using Core.AI.BehaviorTrees.Behaviors.BuildingBlocks;
+using Core.AI.BehaviorTrees.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
-    public class Repeater: Decorator
+    public class Repeater : Decorator
     {
-        private int _repeatCount;
+        private readonly int _repeatCount;
         private int _currentCount;
         public Repeater(Behavior child, int repeatCount) : base(child) =>
             _repeatCount = repeatCount;
@@ -32,7 +32,5 @@ namespace Core.AI.BehaviorTrees.Behaviors
 
             return CurrentStatus;
         }
-
-        protected override void Terminate() {}
     }
 }
