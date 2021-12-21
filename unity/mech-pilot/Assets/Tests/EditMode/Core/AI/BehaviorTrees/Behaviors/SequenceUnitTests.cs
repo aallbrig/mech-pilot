@@ -38,5 +38,32 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             Assert.IsFalse(secondSpy.ExecuteMethodCalled);
             Assert.AreEqual(Behavior.Status.Failure, sut.CurrentStatus);
         }
+
+        [Test]
+        public void Sequence_WillEventuallySucceed_EvenWithLongRunningBehaviors()
+        {
+            var firstSpyCounter = 0;
+            var firstSpy = new BehaviorSpy(() =>
+            {
+                if (firstSpyCounter >= 3)
+                    return Behavior.Status.Success;
+
+                firstSpyCounter++;
+                return Behavior.Status.Running;
+            });
+            var secondSpy = new BehaviorSpy(() => Behavior.Status.Success);
+            var children = new List<Behavior> {firstSpy, secondSpy};
+            var sut = new Sequence(children);
+            Behavior.Status status = Behavior.Status.Failure;
+
+            for (var i = 0; i < 1000; i++)
+            {
+                status = sut.Tick();
+                if (status != Behavior.Status.Running) break;
+            }
+
+            Assert.AreEqual(4, firstSpy.ExecuteMethodCallCount);
+            Assert.AreEqual(Behavior.Status.Success, status);
+        }
     }
 }

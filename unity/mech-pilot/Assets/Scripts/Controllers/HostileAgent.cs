@@ -45,11 +45,12 @@ namespace Controllers
 
         private bool DetectPlayer()
         {
-            Debug.Log("Detect player called");
             var collisions = Physics.OverlapSphere(transform.position, playerDetectRadius);
             foreach (var collision in collisions)
                 if (collision.transform.GetComponent<PlayerController>())
                 {
+                    // This is awesome! It's like using the monobehavior definition as the blackboard
+                    // ... which right now seems like a good idea :)
                     _target = collision.transform;
                     return true;
                 }
@@ -65,6 +66,9 @@ namespace Controllers
         private Action.ActionCommand MoveWithinRange(float range) => () =>
         {
             if (_target == null) return Behavior.Status.Failure;
+
+            if (Vector3.Distance(_target.transform.position, transform.position) >= playerDetectRadius)
+                return Behavior.Status.Failure;
 
             if (Vector3.Distance(_target.transform.position, transform.position) <= range)
                 return Behavior.Status.Success;
