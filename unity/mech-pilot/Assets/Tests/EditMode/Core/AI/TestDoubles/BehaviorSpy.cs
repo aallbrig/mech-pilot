@@ -7,12 +7,12 @@ namespace Tests.EditMode.Core.AI.TestDoubles
     {
 
         private readonly Func<Status> _desiredExecuteStatus;
+        public int ExecuteMethodCallCount;
         public bool ExecuteMethodCalled;
-        public int ExecuteMethodCallCount = 0;
+        public int InitializeMethodCallCount;
         public bool InitializeMethodCalled;
-        public int InitializeMethodCallCount = 0;
+        public int TerminateMethodCallCount;
         public bool TerminateMethodCalled;
-        public int TerminateMethodCallCount = 0;
         public BehaviorSpy(Func<Status> desiredExecuteStatus) => _desiredExecuteStatus = desiredExecuteStatus;
 
         protected override Status Execute()

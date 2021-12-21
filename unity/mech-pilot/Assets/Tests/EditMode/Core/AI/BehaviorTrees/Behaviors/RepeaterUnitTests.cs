@@ -15,10 +15,10 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
 
             // for loop instead of a while loop, to protect me from my code ^_^
             // "1000" is arbitrary
-            for (int i = 0; i < 1000; i++)
+            for (var i = 0; i < 1000; i++)
             {
-                 var status = sut.Tick();
-                 if (status == Behavior.Status.Success) break;
+                var status = sut.Tick();
+                if (status == Behavior.Status.Success) break;
             }
 
             Assert.AreEqual(3, spy.InitializeMethodCallCount);
