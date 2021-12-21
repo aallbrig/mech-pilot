@@ -10,7 +10,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         [Test]
         public void Inverter_ReturnSuccess_WhenChildFails()
         {
-            var spy = new BehaviorSpy(Behavior.Status.Failure);
+            var spy = new BehaviorSpy(() => Behavior.Status.Failure);
             var sut = new Inverter(spy);
 
             sut.Tick();
@@ -21,7 +21,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         [Test]
         public void Inverter_ReturnFailure_WhenChildSucceeds()
         {
-            var spy = new BehaviorSpy(Behavior.Status.Success);
+            var spy = new BehaviorSpy(() => Behavior.Status.Success);
             var sut = new Inverter(spy);
 
             sut.Tick();
@@ -32,7 +32,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         [Test]
         public void Inverter_ReturnsRunning_WhenChildReturnsRunning()
         {
-            var spy = new BehaviorSpy(Behavior.Status.Running);
+            var spy = new BehaviorSpy(() => Behavior.Status.Running);
             var sut = new Inverter(spy);
 
             sut.Tick();

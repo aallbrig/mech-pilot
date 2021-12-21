@@ -11,8 +11,8 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         [Test]
         public void Selector_FirstBehaviorSuccessIsSelected()
         {
-            var firstSpy = new BehaviorSpy(Behavior.Status.Failure);
-            var secondSpy = new BehaviorSpy(Behavior.Status.Success);
+            var firstSpy = new BehaviorSpy(() => Behavior.Status.Failure);
+            var secondSpy = new BehaviorSpy(() => Behavior.Status.Success);
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Selector(children);
 
@@ -27,8 +27,8 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         [Test]
         public void Selector_FailsWhenAllChildrenFail()
         {
-            var firstSpy = new BehaviorSpy(Behavior.Status.Failure);
-            var secondSpy = new BehaviorSpy(Behavior.Status.Failure);
+            var firstSpy = new BehaviorSpy(() => Behavior.Status.Failure);
+            var secondSpy = new BehaviorSpy(() => Behavior.Status.Failure);
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Selector(children);
 
@@ -43,8 +43,8 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         [Test]
         public void Selector_DoesNotCallOtherChildrenAfterSuccess()
         {
-            var firstSpy = new BehaviorSpy(Behavior.Status.Success);
-            var secondSpy = new BehaviorSpy(Behavior.Status.Failure);
+            var firstSpy = new BehaviorSpy(() => Behavior.Status.Success);
+            var secondSpy = new BehaviorSpy(() => Behavior.Status.Failure);
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Selector(children);
 

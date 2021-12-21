@@ -11,8 +11,8 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         [Test]
         public void Sequence_NextBehaviorExecuted_WhenPreviousIsSuccessful()
         {
-            var firstSpy = new BehaviorSpy(Behavior.Status.Success);
-            var secondSpy = new BehaviorSpy(Behavior.Status.Success);
+            var firstSpy = new BehaviorSpy(() => Behavior.Status.Success);
+            var secondSpy = new BehaviorSpy(() => Behavior.Status.Success);
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Sequence(children);
 
@@ -27,8 +27,8 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         [Test]
         public void Sequence_NextBehaviorNotExecuted_WhenPreviousIsFailure()
         {
-            var firstSpy = new BehaviorSpy(Behavior.Status.Failure);
-            var secondSpy = new BehaviorSpy(Behavior.Status.Success);
+            var firstSpy = new BehaviorSpy(() => Behavior.Status.Failure);
+            var secondSpy = new BehaviorSpy(() => Behavior.Status.Success);
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Sequence(children);
 

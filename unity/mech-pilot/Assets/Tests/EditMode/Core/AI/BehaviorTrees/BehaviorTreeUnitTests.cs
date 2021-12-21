@@ -10,7 +10,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees
         [Test]
         public void BehaviorTrees_CanBeTicked()
         {
-            var spyBehavior = new BehaviorSpy(Behavior.Status.Success);
+            var spyBehavior = new BehaviorSpy(() => Behavior.Status.Success);
             var sut = new BehaviorTree(spyBehavior);
 
             sut.Tick();
