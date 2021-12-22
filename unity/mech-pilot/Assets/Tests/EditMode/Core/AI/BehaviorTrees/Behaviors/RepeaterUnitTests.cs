@@ -13,8 +13,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var spy = new BehaviorSpy(() => Behavior.Status.Success);
             var sut = new Repeater(spy, 3);
 
-            // for loop instead of a while loop, to protect me from my code ^_^
-            // "1000" is arbitrary
+            
             for (var i = 0; i < 1000; i++)
             {
                 var status = sut.Tick();

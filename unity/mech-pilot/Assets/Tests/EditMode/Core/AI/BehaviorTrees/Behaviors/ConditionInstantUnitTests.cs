@@ -2,6 +2,7 @@ using System;
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.BehaviorTrees.Utilities;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
 {
@@ -13,7 +14,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var predicate = new Func<bool>(() => true);
             var sut = new ConditionInstant(predicate);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.AreEqual(Behavior.Status.Success, sut.CurrentStatus);
         }
@@ -24,7 +25,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var predicate = new Func<bool>(() => false);
             var sut = new ConditionInstant(predicate);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.AreEqual(Behavior.Status.Failure, sut.CurrentStatus);
         }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.BehaviorTrees.Utilities;
 using Tests.EditMode.Core.AI.TestDoubles;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
@@ -13,11 +14,9 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         {
             var firstSpy = new BehaviorSpy(() => Behavior.Status.Success);
             var secondSpy = new BehaviorSpy(() => Behavior.Status.Success);
-            var children = new List<Behavior> {firstSpy, secondSpy};
-            var sut = new Sequence(children);
+            var sut = new Sequence(new List<Behavior> {firstSpy, secondSpy});
 
-            sut.Tick();
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.IsTrue(firstSpy.ExecuteMethodCalled);
             Assert.IsTrue(secondSpy.ExecuteMethodCalled);
@@ -32,7 +31,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Sequence(children);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.IsTrue(firstSpy.ExecuteMethodCalled);
             Assert.IsFalse(secondSpy.ExecuteMethodCalled);
@@ -51,19 +50,13 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
                 firstSpyCounter++;
                 return Behavior.Status.Running;
             });
-            var secondSpy = new BehaviorSpy(() => Behavior.Status.Success);
-            var children = new List<Behavior> {firstSpy, secondSpy};
+            var children = new List<Behavior> {firstSpy};
             var sut = new Sequence(children);
-            Behavior.Status status = Behavior.Status.Failure;
 
-            for (var i = 0; i < 1000; i++)
-            {
-                status = sut.Tick();
-                if (status != Behavior.Status.Running) break;
-            }
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.AreEqual(4, firstSpy.ExecuteMethodCallCount);
-            Assert.AreEqual(Behavior.Status.Success, status);
+            Assert.AreEqual(Behavior.Status.Success, sut.CurrentStatus);
         }
     }
 }

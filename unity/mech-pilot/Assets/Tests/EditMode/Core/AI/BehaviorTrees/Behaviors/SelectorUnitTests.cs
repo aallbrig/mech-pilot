@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.BehaviorTrees.Utilities;
 using Tests.EditMode.Core.AI.TestDoubles;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
@@ -32,8 +33,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Selector(children);
 
-            sut.Tick();
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.IsTrue(firstSpy.ExecuteMethodCalled);
             Assert.IsTrue(secondSpy.ExecuteMethodCalled);
@@ -48,8 +48,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Selector(children);
 
-            sut.Tick();
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.IsTrue(firstSpy.ExecuteMethodCalled);
             Assert.IsFalse(secondSpy.ExecuteMethodCalled);

@@ -1,6 +1,7 @@
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.BehaviorTrees.Utilities;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
 {
@@ -17,7 +18,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             });
             var sut = new Action(spyAction);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.IsTrue(spyCalled);
         }
@@ -29,7 +30,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var spySetup = new Action.ActionSetup(() => spyCalled = true);
             var sut = new Action(() => Behavior.Status.Success, spySetup);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.IsTrue(spyCalled);
         }
@@ -41,7 +42,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var spyTeardown = new Action.ActionTeardown(() => spyCalled = true);
             var sut = new Action(() => Behavior.Status.Success, null, spyTeardown);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.IsTrue(spyCalled);
         }

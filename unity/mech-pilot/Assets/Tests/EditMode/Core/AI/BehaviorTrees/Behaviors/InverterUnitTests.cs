@@ -1,6 +1,7 @@
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.BehaviorTrees.Utilities;
 using Tests.EditMode.Core.AI.TestDoubles;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
@@ -13,7 +14,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var spy = new BehaviorSpy(() => Behavior.Status.Failure);
             var sut = new Inverter(spy);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.AreEqual(Behavior.Status.Success, sut.CurrentStatus);
         }
@@ -24,7 +25,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var spy = new BehaviorSpy(() => Behavior.Status.Success);
             var sut = new Inverter(spy);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.AreEqual(Behavior.Status.Failure, sut.CurrentStatus);
         }
@@ -35,7 +36,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var spy = new BehaviorSpy(() => Behavior.Status.Running);
             var sut = new Inverter(spy);
 
-            sut.Tick();
+            BehaviorTestHarness.RunToComplete(sut);
 
             Assert.AreEqual(Behavior.Status.Running, sut.CurrentStatus);
         }
