@@ -16,6 +16,9 @@ namespace Core.AI.BehaviorTrees
 
         public void Tick()
         {
+            // DESIGN DECISION: when a BT re-evaluates, should it pick up from where it left off?
+            // (aka remember the current node?)
+            // ...because right now, it just sorta executes the whole thing
             if (_currentNode == null) _currentNode = RootBehavior;
             _currentNode.Tick();
         }
