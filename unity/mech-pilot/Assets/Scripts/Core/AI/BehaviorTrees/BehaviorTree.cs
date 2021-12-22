@@ -5,7 +5,6 @@ namespace Core.AI.BehaviorTrees
 {
     public class BehaviorTree
     {
-        private Behavior _currentNode;
         public BehaviorTree(Behavior rootNode) =>
             // The root node can't be a leaf node?
             // Or is the concept of having the root node be composite very important?
@@ -19,8 +18,7 @@ namespace Core.AI.BehaviorTrees
             // DESIGN DECISION: when a BT re-evaluates, should it pick up from where it left off?
             // (aka remember the current node?)
             // ...because right now, it just sorta executes the whole thing
-            if (_currentNode == null) _currentNode = RootBehavior;
-            _currentNode.Tick();
+            RootBehavior.Tick();
         }
     }
 }
