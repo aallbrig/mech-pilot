@@ -3,17 +3,16 @@ using Core.AI.BehaviorTrees.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
-    public class ConditionInstant : Behavior
+    public class ConditionMonitor: Decorator
     {
         private readonly Func<bool> _predicate;
-
-        public ConditionInstant(Func<bool> predicate) =>
+        public ConditionMonitor(Func<bool> predicate, Behavior child) : base(child) =>
             _predicate = predicate;
 
         protected override Status Execute()
         {
-            var conditionCheck = _predicate.Invoke();
-            CurrentStatus = conditionCheck ? Status.Success : Status.Failure;
+            var status = _predicate.Invoke();
+            CurrentStatus = status ? Child.Tick() : Status.Failure;
             return CurrentStatus;
         }
     }

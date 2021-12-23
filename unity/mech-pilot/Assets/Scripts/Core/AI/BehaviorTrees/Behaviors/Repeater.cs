@@ -14,9 +14,7 @@ namespace Core.AI.BehaviorTrees.Behaviors
         {
             if (_currentCount >= _repeatCount) return Status.Success;
 
-            var status = Child.Tick();
-
-            switch (status)
+            switch (Child.Tick())
             {
                 case Status.Success:
                     _currentCount++;

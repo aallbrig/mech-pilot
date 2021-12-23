@@ -90,6 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3282679595217871755}
+  - component: {fileID: 2871354720274702508}
   m_Layer: 0
   m_Name: MechAgent
   m_TagString: Untagged
@@ -112,6 +113,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2871354720274702508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3282679595217871754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd45a25bd344287a0eeaebe99310ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 3282679595152704940}
 --- !u!1 &3282679595225328224
 GameObject:
   m_ObjectHideFlags: 0
