@@ -12,12 +12,13 @@ namespace Controllers
     {
         public float playerDetectRadius = 5f;
         public float attackRange = 2.5f;
-        public float attackCooldown;
+        public float attackCooldown = 3;
         public float speed = 2f;
+        public bool debugLog;
         private Vector3? _destination;
         private Transform _target;
         private MechAgent _mechAgent;
-        private float _attackTime;
+        private float _waitTimeStart;
 
         private void Awake()
         {
@@ -35,8 +36,8 @@ namespace Controllers
         {
             var attackSequence = new Sequence(new List<Behavior>
             {
-                new Action(AttackPlayer, null, () => _attackTime = Time.time),
-                new Action(AttackCooldown)
+                new Action(AttackPlayer, null, () => _waitTimeStart = Time.time),
+                new Action(() => Wait(attackCooldown))
             });
 
             var attackBehavior = new Sequence(new List<Behavior>
@@ -55,7 +56,8 @@ namespace Controllers
 
             var patrolBehavior = new Sequence(new List<Behavior>
             {
-                new Action(MoveToRandomLocation, null, ResetDestination)
+                new Action(MoveToRandomLocation, null, ResetDestination),
+                new Action(() => Wait(1)) // wait 1 second
             });
 
             var rootNode = new Selector(new List<Behavior>
@@ -67,9 +69,10 @@ namespace Controllers
             return new BehaviorTree(rootNode);
         }
 
-        private Behavior.Status AttackCooldown()
+        private Behavior.Status Wait(float seconds)
         {
-            return Time.time - _attackTime > attackCooldown ? Behavior.Status.Success : Behavior.Status.Running;
+            if (debugLog) Debug.Log($"Wait(waitTime) called {name}, {Time.time}, {_waitTimeStart}, {seconds}, {Time.time - _waitTimeStart}");
+            return Time.time - _waitTimeStart > seconds ? Behavior.Status.Success : Behavior.Status.Running;
         }
 
         private bool WithinAttackRange(Transform target, float range) =>
@@ -77,6 +80,7 @@ namespace Controllers
 
         private bool DetectPlayer()
         {
+            if (debugLog) Debug.Log($"DetectPlayer called {name}");
             var collisions = Physics.OverlapSphere(transform.position, playerDetectRadius);
             foreach (var collision in collisions)
                 if (collision.transform.GetComponent<PlayerController>())
@@ -91,13 +95,15 @@ namespace Controllers
 
         private Behavior.Status MoveToRandomLocation()
         {
-            Debug.Log("MoveToRandomLocation called");
+            if (debugLog) Debug.Log($"MoveToRandomLocation called {name}");
             // TODO: fill in with actual action
             return Behavior.Status.Success;
         }
 
         private Action.ActionCommand MoveWithinRange(float range) => () =>
         {
+            if (debugLog) Debug.Log($"MoveWithinRange called {name}");
+
             if (_target == null) return Behavior.Status.Failure;
 
             if (Vector3.Distance(_target.transform.position, transform.position) >= playerDetectRadius)
@@ -112,7 +118,7 @@ namespace Controllers
 
         private Behavior.Status AttackPlayer()
         {
-            Debug.Log("AttackPlayer called");
+            if (debugLog) Debug.Log($"AttackPlayer called {name}");
             if (_target == null) return Behavior.Status.Failure;
 
             // TODO fill in with monobehavior activities

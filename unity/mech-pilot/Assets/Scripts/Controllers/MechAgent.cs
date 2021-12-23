@@ -9,11 +9,9 @@ namespace Controllers
         private Color _originalColor;
         private Renderer _renderer;
 
-        private void Awake()
-        {
+        private void Awake() =>
             // TODO: Complain if head is not set
             _renderer = head.GetComponent<Renderer>();
-        }
         private void Start() => _originalColor = _renderer.sharedMaterial.GetColor(_shaderColorReference);
 
         public void SetColor(Color color) => _renderer.material.SetColor(_shaderColorReference, color);
