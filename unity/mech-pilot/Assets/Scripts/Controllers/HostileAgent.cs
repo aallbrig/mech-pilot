@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Core.AI.BehaviorTrees;
 using Core.AI.BehaviorTrees.Behaviors;
@@ -19,6 +20,7 @@ namespace Controllers
         private Transform _target;
         private MechAgent _mechAgent;
         private float _waitTimeStart;
+        private bool _attacking;
 
         private void Awake()
         {
@@ -36,8 +38,8 @@ namespace Controllers
         {
             var attackSequence = new Sequence(new List<Behavior>
             {
-                new Action(AttackPlayer, null, () => _waitTimeStart = Time.time),
-                new Action(() => Wait(attackCooldown))
+                new Action(AttackPlayer, () => StartCoroutine(Attack()), () => StopCoroutine(Attack())),
+                new Action(() => Wait(attackCooldown), () => _waitTimeStart = Time.time)
             });
 
             var attackBehavior = new Sequence(new List<Behavior>
@@ -121,8 +123,17 @@ namespace Controllers
             if (debugLog) Debug.Log($"AttackPlayer called {name}");
             if (_target == null) return Behavior.Status.Failure;
 
-            // TODO fill in with monobehavior activities
-            return Behavior.Status.Success;
+            // TODO fill in with monobehaviour activities
+            return _attacking ? Behavior.Status.Running : Behavior.Status.Success;
+        }
+
+        private IEnumerator Attack()
+        {
+            _attacking = true;
+            _mechAgent.SetColor(Color.magenta);
+            yield return new WaitForSeconds(0.25f);
+            _mechAgent.ResetColor();
+            _attacking = false;
         }
 
         private void ResetDestination() => _destination = null;
