@@ -4,7 +4,6 @@ using Core.AI.BehaviorTrees;
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using UnityEngine;
-using Action = Core.AI.BehaviorTrees.Behaviors.Action;
 
 namespace Controllers
 {
@@ -16,18 +15,14 @@ namespace Controllers
         public float attackCooldown = 3;
         public float speed = 2f;
         public bool debugLog;
-        private Vector3? _destination;
-        private Transform _target;
-        private MechAgent _mechAgent;
-        private float _waitTimeStart;
         private bool _attacking;
+        private Vector3? _destination;
+        private MechAgent _mechAgent;
+        private Transform _target;
+        private float _waitTimeStart;
 
-        private void Awake()
-        {
-            _mechAgent = GetComponent<MechAgent>();
-            // TODO: complain if _mechAgent is null
-        }
-
+        private void Awake() => _mechAgent = GetComponent<MechAgent>();
+        // TODO: complain if _mechAgent is null
         private void Update()
         {
             if (_destination != null)
@@ -73,7 +68,9 @@ namespace Controllers
 
         private Behavior.Status Wait(float seconds)
         {
-            if (debugLog) Debug.Log($"Wait(waitTime) called {name}, {Time.time}, {_waitTimeStart}, {seconds}, {Time.time - _waitTimeStart}");
+            if (debugLog)
+                Debug.Log(
+                    $"Wait(waitTime) called {name}, {Time.time}, {_waitTimeStart}, {seconds}, {Time.time - _waitTimeStart}");
             return Time.time - _waitTimeStart > seconds ? Behavior.Status.Success : Behavior.Status.Running;
         }
 

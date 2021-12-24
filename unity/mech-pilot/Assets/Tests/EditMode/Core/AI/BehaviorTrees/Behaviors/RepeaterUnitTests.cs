@@ -13,7 +13,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var spy = new BehaviorSpy(() => Behavior.Status.Success);
             var sut = new Repeater(spy, 3);
 
-            
+
             for (var i = 0; i < 1000; i++)
             {
                 var status = sut.Tick();

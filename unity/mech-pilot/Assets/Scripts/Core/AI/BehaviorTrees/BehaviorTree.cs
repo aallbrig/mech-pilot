@@ -13,12 +13,10 @@ namespace Core.AI.BehaviorTrees
 
         public Behavior RootBehavior { get; }
 
-        public void Tick()
-        {
+        public void Tick() =>
             // DESIGN DECISION: when a BT re-evaluates, should it pick up from where it left off?
             // (aka remember the current node?)
             // ...because right now, it just sorta executes the whole thing
             RootBehavior.Tick();
-        }
     }
 }

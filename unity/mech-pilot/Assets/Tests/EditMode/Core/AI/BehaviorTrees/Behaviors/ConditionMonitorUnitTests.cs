@@ -15,9 +15,9 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var spy = new BehaviorSpy(() => Behavior.Status.Success);
             var predicate = new Func<bool>(() => true);
             var sut = new ConditionMonitor(predicate, spy);
-            
+
             BehaviorTestHarness.RunToComplete(sut);
-            
+
             Assert.IsTrue(spy.ExecuteMethodCalled);
             Assert.AreEqual(Behavior.Status.Success, sut.CurrentStatus);
         }

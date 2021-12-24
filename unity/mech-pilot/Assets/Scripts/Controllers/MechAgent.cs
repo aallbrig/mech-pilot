@@ -4,8 +4,8 @@ namespace Controllers
 {
     public class MechAgent : MonoBehaviour
     {
-        public Transform head;
         private const string ShaderColorReference = "Color_876475b9a8494fc3b31d8b52b532115e";
+        public Transform head;
         private Color _originalColor;
         private Renderer _renderer;
 
