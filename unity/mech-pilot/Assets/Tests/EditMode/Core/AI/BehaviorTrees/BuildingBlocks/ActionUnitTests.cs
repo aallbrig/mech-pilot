@@ -3,7 +3,7 @@ using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
 using Tests.EditMode.Core.AI.BehaviorTrees.Utilities;
 
-namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
+namespace Tests.EditMode.Core.AI.BehaviorTrees.BuildingBlocks
 {
     public class ActionUnitTests
     {

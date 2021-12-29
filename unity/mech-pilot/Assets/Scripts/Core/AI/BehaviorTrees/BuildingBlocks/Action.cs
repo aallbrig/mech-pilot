@@ -1,6 +1,4 @@
-using Core.AI.BehaviorTrees.BuildingBlocks;
-
-namespace Core.AI.BehaviorTrees.Behaviors
+namespace Core.AI.BehaviorTrees.BuildingBlocks
 {
     public class Action : Behavior
     {

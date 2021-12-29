@@ -14,7 +14,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         {
             var spy = new BehaviorSpy(() => Behavior.Status.Success);
             var predicate = new Func<bool>(() => true);
-            var sut = new ConditionMonitor(predicate, spy);
+            var sut = new ConditionMonitor(new Condition(predicate), spy);
 
             BehaviorTestHarness.RunToComplete(sut);
 
@@ -27,7 +27,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
         {
             var fake = new BehaviorFake();
             var predicate = new Func<bool>(() => false);
-            var sut = new ConditionMonitor(predicate, fake);
+            var sut = new ConditionMonitor(new Condition(predicate), fake);
 
             BehaviorTestHarness.RunToComplete(sut);
 

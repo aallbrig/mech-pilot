@@ -39,14 +39,14 @@ namespace Controllers
 
             var attackBehavior = new Sequence(new List<Behavior>
             {
-                new ConditionInstant(DetectPlayer),
+                new Condition(DetectPlayer),
                 new Action(MoveWithinRange(attackRange), () => _mechAgent.SetColor(Color.yellow), () =>
                 {
                     _mechAgent.ResetColor();
                     ResetDestination();
                 }),
                 new ConditionMonitor(
-                    () => WithinAttackRange(_target, attackRange),
+                    new Condition(() => WithinAttackRange(_target, attackRange)),
                     new Repeater(attackSequence, 3)
                 )
             });

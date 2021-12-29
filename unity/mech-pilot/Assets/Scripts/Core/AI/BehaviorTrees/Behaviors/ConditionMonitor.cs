@@ -1,18 +1,16 @@
-using System;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 
 namespace Core.AI.BehaviorTrees.Behaviors
 {
     public class ConditionMonitor : Decorator
     {
-        private readonly Func<bool> _predicate;
-        public ConditionMonitor(Func<bool> predicate, Behavior child) : base(child) =>
-            _predicate = predicate;
+        private readonly Condition _condition;
+        public ConditionMonitor(Condition condition, Behavior child) : base(child) => _condition = condition;
 
         protected override Status Execute()
         {
-            var status = _predicate.Invoke();
-            CurrentStatus = status ? Child.Evaluate() : Status.Failure;
+            var conditionStatus = _condition.Evaluate();
+            CurrentStatus = conditionStatus == Status.Success ? Child.Evaluate() : Status.Failure;
             return CurrentStatus;
         }
     }
