@@ -1,4 +1,5 @@
 using System;
+using Locomotion;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PlayerInput = Generated.PlayerInput;
@@ -63,12 +64,15 @@ namespace Controllers
         [SerializeReference] private TouchInteraction startTouch;
         [SerializeReference] private TouchInteraction endTouch;
         private PlayerInput _controls;
+        private AgentLocomotion _locomotion;
 
         private void Awake() => _controls = new PlayerInput();
         private void Start()
         {
             _controls.Gameplay.PointerDown.started += OnTouchInteractionStarted;
             _controls.Gameplay.PointerDown.canceled += OnTouchInteractionStopped;
+            // TODO: complain is _locomotion is not set
+            _locomotion = GetComponent<AgentLocomotion>();
         }
         private void OnEnable() => _controls?.Enable();
         private void OnDisable() => _controls?.Disable();
@@ -77,15 +81,13 @@ namespace Controllers
         {
             swipe = null;
             startTouch = TouchInteraction.Of(_controls.Gameplay.PointerPosition.ReadValue<Vector2>());
-            Debug.Log($"Start: {startTouch}");
         }
 
         private void OnTouchInteractionStopped(InputAction.CallbackContext context)
         {
             endTouch = TouchInteraction.Of(_controls.Gameplay.PointerPosition.ReadValue<Vector2>());
-            Debug.Log($"End: {endTouch}");
             swipe = Swipe.Of(startTouch, endTouch);
-            Debug.Log($"Swipe: {swipe}");
+            _locomotion.SetNormalizedVector(swipe.VectorNormalized);
         }
     }
 }

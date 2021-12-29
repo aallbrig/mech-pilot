@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Core.AI.BehaviorTrees;
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
+using Locomotion;
 using UnityEngine;
 using Action = Core.AI.BehaviorTrees.BuildingBlocks.Action;
 
@@ -15,20 +16,19 @@ namespace Controllers
         public float playerDetectRadius = 5f;
         public float attackRange = 2.5f;
         public float attackCooldown = 3;
-        public float speed = 2f;
         public bool debugLog;
         private bool _attacking;
-        private Vector3? _destination;
+        private AgentLocomotion _locomotion;
         private MechAgent _mechAgent;
         private Transform _target;
         private float _waitTimeStart;
 
-        private void Awake() => _mechAgent = GetComponent<MechAgent>();
-        // TODO: complain if _mechAgent is null
-        private void Update()
+        private void Awake()
         {
-            if (_destination != null)
-                transform.position = Vector3.MoveTowards(transform.position, (Vector3) _destination, Time.deltaTime * speed);
+            // TODO: complain if _mechAgent is null
+            _mechAgent = GetComponent<MechAgent>();
+            // TODO: complain if _locomotion is null
+            _locomotion = GetComponent<AgentLocomotion>();
         }
 
         public BehaviorTree Build()
@@ -45,7 +45,7 @@ namespace Controllers
                 new Action(MoveWithinRange(attackRange), () => _mechAgent.SetColor(Color.yellow), () =>
                 {
                     _mechAgent.ResetColor();
-                    ResetDestination();
+                    _locomotion.Stop();
                 }),
                 new ConditionMonitor(
                     new Condition(() => WithinAttackRange(_target, attackRange)),
@@ -55,7 +55,7 @@ namespace Controllers
 
             var patrolBehavior = new Sequence(new List<Behavior>
             {
-                new Action(MoveToRandomLocation, null, ResetDestination),
+                new Action(MoveToRandomLocation, null, _locomotion.Stop),
                 new Action(() => Wait(1)) // wait 1 second
             });
 
@@ -113,7 +113,8 @@ namespace Controllers
             if (Vector3.Distance(_target.transform.position, transform.position) <= range)
                 return Behavior.Status.Success;
 
-            _destination = _target.position;
+            var vectorToTarget = (_target.transform.position - transform.position).normalized;
+            _locomotion.SetNormalizedVector(vectorToTarget);
             return Behavior.Status.Running;
         };
 
@@ -134,7 +135,5 @@ namespace Controllers
             _mechAgent.ResetColor();
             _attacking = false;
         }
-
-        private void ResetDestination() => _destination = null;
     }
 }

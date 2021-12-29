@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3282679595217871755}
   - component: {fileID: 2871354720274702508}
+  - component: {fileID: 1118289072435560562}
   m_Layer: 0
   m_Name: MechAgent
   m_TagString: Untagged
@@ -126,6 +127,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   head: {fileID: 3282679595152704940}
+--- !u!114 &1118289072435560562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3282679595217871754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b850795c9d40cc8ad2d745a7619c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
 --- !u!1 &3282679595225328224
 GameObject:
   m_ObjectHideFlags: 0

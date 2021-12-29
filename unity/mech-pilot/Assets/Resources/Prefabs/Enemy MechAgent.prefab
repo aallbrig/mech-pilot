@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &8567577942465528008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7975174830540012854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c80191e9f34b43afa9820c4ebe2831d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerDetectRadius: 5
 --- !u!114 &4803412993309840526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,6 +13,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thinkRate: 0.25
+--- !u!114 &8567577942465528008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975174830540012854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80191e9f34b43afa9820c4ebe2831d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDetectRadius: 8
+  attackRange: 2.5
+  attackCooldown: 3
+  debugLog: 0
 --- !u!1001 &4837966551268941500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33,6 +36,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1118289072435560562, guid: 229164885def545dd8c6b67a7e7c61b9, type: 3}
+      propertyPath: speed
+      value: 2.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3282679595152704938, guid: 229164885def545dd8c6b67a7e7c61b9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

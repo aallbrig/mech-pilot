@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "PointerPosition",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "91243fab-6e10-4a49-825a-03c0074da3b7",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -15,7 +15,7 @@
                 },
                 {
                     "name": "PointerDown",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "8be1b6d9-47f9-40d9-90a1-b7170e1f8ab6",
                     "expectedControlType": "Button",
                     "processors": "",
