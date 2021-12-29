@@ -12,7 +12,7 @@ namespace Core.AI.BehaviorTrees.Behaviors
         protected override Status Execute()
         {
             var status = _predicate.Invoke();
-            CurrentStatus = status ? Child.Tick() : Status.Failure;
+            CurrentStatus = status ? Child.Evaluate() : Status.Failure;
             return CurrentStatus;
         }
     }

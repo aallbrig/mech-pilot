@@ -8,7 +8,7 @@ namespace Core.AI.BehaviorTrees.Behaviors
 
         protected override Status Execute()
         {
-            var childStatus = Child.Tick();
+            var childStatus = Child.Evaluate();
             switch (childStatus)
             {
                 case Status.Success:

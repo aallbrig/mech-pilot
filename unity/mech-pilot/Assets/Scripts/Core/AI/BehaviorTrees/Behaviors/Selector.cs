@@ -10,7 +10,7 @@ namespace Core.AI.BehaviorTrees.Behaviors
         protected override Status Execute()
         {
             var currentChild = Children[CurrentIndex];
-            var childStatus = currentChild.Tick();
+            var childStatus = currentChild.Evaluate();
 
             if (childStatus != Status.Failure)
                 CurrentStatus = childStatus;

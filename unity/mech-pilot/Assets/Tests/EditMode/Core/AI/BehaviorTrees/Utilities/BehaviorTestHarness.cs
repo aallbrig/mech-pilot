@@ -12,7 +12,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Utilities
             // for loop (instead of a while loop) to protect me from my code ^_^
             for (var i = 0; i < LoopLimit; i++)
             {
-                var status = behavior.Tick();
+                var status = behavior.Evaluate();
                 if (status != Behavior.Status.Running) break;
             }
         }

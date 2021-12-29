@@ -17,8 +17,8 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
             var children = new List<Behavior> {firstSpy, secondSpy};
             var sut = new Selector(children);
 
-            sut.Tick();
-            sut.Tick();
+            sut.Evaluate();
+            sut.Evaluate();
 
             Assert.IsTrue(firstSpy.ExecuteMethodCalled);
             Assert.IsTrue(secondSpy.ExecuteMethodCalled);

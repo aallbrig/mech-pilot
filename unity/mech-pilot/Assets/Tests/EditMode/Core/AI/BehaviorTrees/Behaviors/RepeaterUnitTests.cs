@@ -16,7 +16,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
 
             for (var i = 0; i < 1000; i++)
             {
-                var status = sut.Tick();
+                var status = sut.Evaluate();
                 if (status == Behavior.Status.Success) break;
             }
 

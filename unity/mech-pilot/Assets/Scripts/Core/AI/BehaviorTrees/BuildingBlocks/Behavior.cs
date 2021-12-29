@@ -17,7 +17,7 @@ namespace Core.AI.BehaviorTrees.BuildingBlocks
         protected abstract Status Execute();
         protected virtual void Terminate() {}
 
-        public Status Tick()
+        public Status Evaluate()
         {
             if (CurrentStatus != Status.Running) Initialize();
             CurrentStatus = Execute();
