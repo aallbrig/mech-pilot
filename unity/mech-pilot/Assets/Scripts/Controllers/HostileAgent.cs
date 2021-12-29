@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core.AI.BehaviorTrees;
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using UnityEngine;
+using Action = Core.AI.BehaviorTrees.BuildingBlocks.Action;
 
 namespace Controllers
 {
@@ -99,7 +101,7 @@ namespace Controllers
             return Behavior.Status.Success;
         }
 
-        private Action.ActionCommand MoveWithinRange(float range) => () =>
+        private Func<Behavior.Status> MoveWithinRange(float range) => () =>
         {
             if (debugLog) Debug.Log($"MoveWithinRange called {name}");
 

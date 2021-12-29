@@ -1,18 +1,13 @@
+using System;
+
 namespace Core.AI.BehaviorTrees.BuildingBlocks
 {
     public class Action : Behavior
     {
-        public delegate Status ActionCommand();
-
-        public delegate void ActionSetup();
-
-        public delegate void ActionTeardown();
-
-        private readonly ActionCommand _action;
-        private readonly ActionSetup _setup;
-        private readonly ActionTeardown _teardown;
-
-        public Action(ActionCommand action, ActionSetup setup = null, ActionTeardown teardown = null)
+        private readonly Func<Status> _action;
+        private readonly System.Action _setup;
+        private readonly System.Action _teardown;
+        public Action(Func<Status> action, System.Action setup = null, System.Action teardown = null)
         {
             _action = action;
             _setup = setup;
