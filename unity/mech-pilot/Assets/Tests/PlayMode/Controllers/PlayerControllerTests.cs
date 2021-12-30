@@ -1,18 +1,26 @@
 using Controllers;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.InputSystem.EnhancedTouch;
+using Locomotion;
 
 namespace Tests.PlayMode.Controllers
 {
+    public class LocomotionSpy : MonoBehaviour, ILocomotion
+    {
+        public Vector3 currentNormalizedVector = Vector3.zero;
+        public void SetNormalizedVector(Vector3 normalizedVector) => currentNormalizedVector = normalizedVector;
+        public void Stop() => throw new System.NotImplementedException();
+    }
+
     public class PlayerControllerTests
     {
         [Test]
         public void PlayerControllerSetsVector()
         {
-            var sut = new GameObject().AddComponent<PlayerController>();
-            var expectedPosition = new Vector2(1337, 1337);
-            TouchSimulation.Enable();
+            var gameObject = new GameObject();
+            var spy = gameObject.AddComponent<LocomotionSpy>();
+            var sut = gameObject.AddComponent<PlayerController>();
+            // TouchSimulation.Enable();
             // InputSystem.QueueDeltaStateEvent(Pointer.current.position, expectedPosition);
             // InputSystem.QueueDeltaStateEvent(Pointer.current.press, 1f);
             // InputSystem.QueueDeltaStateEvent(Pointer.current.press, 0f);

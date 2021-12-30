@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7601592949641621125, guid: 8e3326808c13d4555a5718ec5dfac332, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -8.87
       objectReference: {fileID: 0}
     - target: {fileID: 7601592949641621125, guid: 8e3326808c13d4555a5718ec5dfac332, type: 3}
       propertyPath: m_LocalPosition.y
@@ -329,9 +329,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 90
-  orthographic: 0
-  orthographic size: 5
+  field of view: 60
+  orthographic: 1
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -398,128 +398,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7601592949641621125, guid: 8e3326808c13d4555a5718ec5dfac332, type: 3}
   m_PrefabInstance: {fileID: 160556610}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1692817402
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7975174830540012854, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_Name
-      value: Enemy MechAgent (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8567577942465528008, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: attackCooldown
-      value: 3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: de22da75581634598a3250dd16127dbb, type: 3}
---- !u!1001 &2113213585
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7975174830540012854, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_Name
-      value: Enemy MechAgent (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975174830540012855, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8567577942465528008, guid: de22da75581634598a3250dd16127dbb, type: 3}
-      propertyPath: attackCooldown
-      value: 3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: de22da75581634598a3250dd16127dbb, type: 3}
 --- !u!1001 &4837966551361773103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -527,6 +405,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4803412993309840526, guid: de22da75581634598a3250dd16127dbb, type: 3}
+      propertyPath: thinkRate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7975174830540012854, guid: de22da75581634598a3250dd16127dbb, type: 3}
       propertyPath: m_Name
       value: Enemy MechAgent

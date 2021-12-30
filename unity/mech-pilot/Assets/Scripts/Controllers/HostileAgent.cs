@@ -7,6 +7,7 @@ using Core.AI.BehaviorTrees.BuildingBlocks;
 using Locomotion;
 using UnityEngine;
 using Action = Core.AI.BehaviorTrees.BuildingBlocks.Action;
+using Random = UnityEngine.Random;
 
 namespace Controllers
 {
@@ -20,7 +21,7 @@ namespace Controllers
         private bool _attacking;
         private AgentLocomotion _locomotion;
         private MechAgent _mechAgent;
-        private Transform _target;
+        private Transform _player;
         private float _waitTimeStart;
 
         private void Awake()
@@ -29,6 +30,8 @@ namespace Controllers
             _mechAgent = GetComponent<MechAgent>();
             // TODO: complain if _locomotion is null
             _locomotion = GetComponent<AgentLocomotion>();
+            // TODO: complain if _player is null
+            _player = FindObjectOfType<PlayerController>().transform;
         }
 
         public BehaviorTree Build()
@@ -48,25 +51,27 @@ namespace Controllers
                     _locomotion.Stop();
                 }),
                 new ConditionMonitor(
-                    new Condition(() => WithinAttackRange(_target, attackRange)),
+                    new Condition(() => WithinRange(_player, attackRange)),
                     new Repeater(attackSequence, 3)
                 )
             });
 
-            var patrolBehavior = new Sequence(new List<Behavior>
+            var chaseBehavior = new Sequence(new List<Behavior>
             {
-                new Action(MoveToRandomLocation, null, _locomotion.Stop),
-                new Action(() => Wait(1)) // wait 1 second
+                new Action(() => MoveTowards(_player)) ,
+                new Action(() => Wait(PatrolWaitTime()))
             });
 
             var rootNode = new Selector(new List<Behavior>
             {
                 attackBehavior,
-                patrolBehavior
+                chaseBehavior
             });
 
             return new BehaviorTree(rootNode);
         }
+
+        private float PatrolWaitTime() => Random.Range(0f, 1.0f) * 6;
 
         private Behavior.Status Wait(float seconds)
         {
@@ -76,28 +81,20 @@ namespace Controllers
             return Time.time - _waitTimeStart > seconds ? Behavior.Status.Success : Behavior.Status.Running;
         }
 
-        private bool WithinAttackRange(Transform target, float range) =>
+        private bool WithinRange(Transform target, float range) =>
             Vector3.Distance(transform.position, target.position) < range;
 
         private bool DetectPlayer()
         {
             if (debugLog) Debug.Log($"DetectPlayer called {name}");
-            var collisions = Physics.OverlapSphere(transform.position, playerDetectRadius);
-            foreach (var collision in collisions)
-                if (collision.transform.GetComponent<PlayerController>())
-                {
-                    // This is awesome! It's like using the monobehavior itself as the blackboard
-                    // ... which right now seems like a good idea :)
-                    _target = collision.transform;
-                    return true;
-                }
-            return false;
+            return Vector3.Distance(_player.position, transform.position) < playerDetectRadius;
         }
 
-        private Behavior.Status MoveToRandomLocation()
+        private Behavior.Status MoveTowards(Transform target)
         {
-            if (debugLog) Debug.Log($"MoveToRandomLocation called {name}");
-            // TODO: fill in with actual action
+            var normalizedVector = (target.position - transform.position).normalized;
+            if (debugLog) Debug.Log($"MoveToRandomLocation called {name} {normalizedVector}");
+            _locomotion.SetNormalizedVector(normalizedVector);
             return Behavior.Status.Success;
         }
 
@@ -105,15 +102,15 @@ namespace Controllers
         {
             if (debugLog) Debug.Log($"MoveWithinRange called {name}");
 
-            if (_target == null) return Behavior.Status.Failure;
+            if (_player == null) return Behavior.Status.Failure;
 
-            if (Vector3.Distance(_target.transform.position, transform.position) >= playerDetectRadius)
+            if (Vector3.Distance(_player.position, transform.position) >= playerDetectRadius)
                 return Behavior.Status.Failure;
 
-            if (Vector3.Distance(_target.transform.position, transform.position) <= range)
+            if (WithinRange(_player, range))
                 return Behavior.Status.Success;
 
-            var vectorToTarget = (_target.transform.position - transform.position).normalized;
+            var vectorToTarget = (_player.position - transform.position).normalized;
             _locomotion.SetNormalizedVector(vectorToTarget);
             return Behavior.Status.Running;
         };
@@ -121,7 +118,7 @@ namespace Controllers
         private Behavior.Status AttackPlayer()
         {
             if (debugLog) Debug.Log($"AttackPlayer called {name}");
-            if (_target == null) return Behavior.Status.Failure;
+            if (_player == null) return Behavior.Status.Failure;
 
             // TODO fill in with monobehaviour activities
             return _attacking ? Behavior.Status.Running : Behavior.Status.Success;

@@ -2,20 +2,26 @@ using UnityEngine;
 
 namespace Locomotion
 {
-    public class AgentLocomotion : MonoBehaviour
+    public interface ILocomotion
+    {
+        void SetNormalizedVector(Vector3 normalizedVector);
+        void Stop();
+    }
+    public class AgentLocomotion : MonoBehaviour, ILocomotion
     {
         public float speed = 3.0f;
-        private Vector3 _normalizedVector = Vector3.zero;
+        [SerializeField] private Vector3 currentDirection = Vector3.zero;
         private Transform _transform;
 
-        public void SetNormalizedVector(Vector3 normalizedVector) => _normalizedVector = normalizedVector;
-        public void Stop() => _normalizedVector = Vector3.zero;
+        public void SetNormalizedVector(Vector3 normalizedVector) => currentDirection = normalizedVector;
+        public void Stop() => currentDirection = Vector3.zero;
         private void HandleMovement()
         {
-            if (_normalizedVector == Vector3.zero) return;
-            else
-                _transform.position = Vector3.MoveTowards(_transform.position, _transform.position + _normalizedVector,
-                    speed * Time.deltaTime);
+            if (currentDirection == Vector3.zero) return;
+
+            var projection = _transform.position + currentDirection;
+            var newPosition = Vector3.MoveTowards(_transform.position, projection, speed * Time.deltaTime);
+            _transform.position = newPosition;
         }
         private void Start() => _transform = transform;
         private void Update() => HandleMovement();
