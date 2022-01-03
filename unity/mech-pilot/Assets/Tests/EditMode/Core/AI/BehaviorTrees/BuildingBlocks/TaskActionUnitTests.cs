@@ -2,7 +2,6 @@ using System;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
 using Tests.EditMode.Core.AI.BehaviorTrees.Utilities;
-using Action = Core.AI.BehaviorTrees.BuildingBlocks.Action;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.BuildingBlocks
 {
@@ -17,7 +16,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.BuildingBlocks
                 spyCalled = true;
                 return Behavior.Status.Success;
             });
-            var sut = new Action(spyAction);
+            var sut = new TaskAction(spyAction);
 
             BehaviorTestHarness.RunToComplete(sut);
 
@@ -29,7 +28,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.BuildingBlocks
         {
             var spyCalled = false;
             var spySetup = new System.Action(() => spyCalled = true);
-            var sut = new Action(() => Behavior.Status.Success, spySetup);
+            var sut = new TaskAction(() => Behavior.Status.Success, spySetup);
 
             BehaviorTestHarness.RunToComplete(sut);
 
@@ -41,7 +40,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.BuildingBlocks
         {
             var spyCalled = false;
             var spyTeardown = new System.Action(() => spyCalled = true);
-            var sut = new Action(() => Behavior.Status.Success, null, spyTeardown);
+            var sut = new TaskAction(() => Behavior.Status.Success, null, spyTeardown);
 
             BehaviorTestHarness.RunToComplete(sut);
 

@@ -2,12 +2,12 @@ using System;
 
 namespace Core.AI.BehaviorTrees.BuildingBlocks
 {
-    public class Action : Behavior
+    public class TaskAction : Behavior
     {
         private readonly Func<Status> _action;
-        private readonly System.Action _setup;
-        private readonly System.Action _teardown;
-        public Action(Func<Status> action, System.Action setup = null, System.Action teardown = null)
+        private readonly Action _setup;
+        private readonly Action _teardown;
+        public TaskAction(Func<Status> action, Action setup = null, Action teardown = null)
         {
             _action = action;
             _setup = setup;

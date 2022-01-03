@@ -6,7 +6,6 @@ using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using Locomotion;
 using UnityEngine;
-using Action = Core.AI.BehaviorTrees.BuildingBlocks.Action;
 using Random = UnityEngine.Random;
 
 namespace Controllers
@@ -38,14 +37,14 @@ namespace Controllers
         {
             var attackSequence = new Sequence(new List<Behavior>
             {
-                new Action(AttackPlayer, () => StartCoroutine(Attack()), () => StopCoroutine(Attack())),
-                new Action(() => Wait(attackCooldown), () => _waitTimeStart = Time.time)
+                new TaskAction(AttackPlayer, () => StartCoroutine(Attack()), () => StopCoroutine(Attack())),
+                new TaskAction(() => Wait(attackCooldown), () => _waitTimeStart = Time.time)
             });
 
             var attackBehavior = new Sequence(new List<Behavior>
             {
                 new Condition(DetectPlayer),
-                new Action(MoveWithinRange(attackRange), () => _mechAgent.SetColor(Color.yellow), () =>
+                new TaskAction(MoveWithinRange(attackRange), () => _mechAgent.SetColor(Color.yellow), () =>
                 {
                     _mechAgent.ResetColor();
                     _locomotion.Stop();
@@ -58,8 +57,8 @@ namespace Controllers
 
             var chaseBehavior = new Sequence(new List<Behavior>
             {
-                new Action(() => MoveTowards(_player)) ,
-                new Action(() => Wait(PatrolWaitTime()))
+                new TaskAction(() => MoveTowards(_player)) ,
+                new TaskAction(() => Wait(PatrolWaitTime()))
             });
 
             var rootNode = new Selector(new List<Behavior>
