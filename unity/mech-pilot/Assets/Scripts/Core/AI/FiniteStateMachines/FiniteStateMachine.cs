@@ -5,7 +5,7 @@ namespace Core.AI.FiniteStateMachines
         public IState CurrentState { get; }
 
         public void Evaluate();
-        public void NewState(IState newState);
+        public void SetState(IState newState);
     }
 
     public class FiniteStateMachine : IFiniteStateMachine
@@ -30,12 +30,12 @@ namespace Core.AI.FiniteStateMachines
                 transition.OnTransition();
                 if (!transition.IsValid())
                     continue;
-                NewState(transition.NextState());
+                SetState(transition.NextState());
                 return;
             }
         }
 
-        public void NewState(IState newState)
+        public void SetState(IState newState)
         {
             CurrentState.Exit();
             CurrentState = newState;
