@@ -27,7 +27,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.BuildingBlocks
         public void ActionBehaviors_OptionallyAllowCustomSetupLogic()
         {
             var spyCalled = false;
-            var spySetup = new System.Action(() => spyCalled = true);
+            var spySetup = new Action(() => spyCalled = true);
             var sut = new TaskAction(() => Behavior.Status.Success, spySetup);
 
             BehaviorTestHarness.RunToComplete(sut);
@@ -39,7 +39,7 @@ namespace Tests.EditMode.Core.AI.BehaviorTrees.BuildingBlocks
         public void ActionBehaviors_OptionallyAllowCustomTeardownLogic()
         {
             var spyCalled = false;
-            var spyTeardown = new System.Action(() => spyCalled = true);
+            var spyTeardown = new Action(() => spyCalled = true);
             var sut = new TaskAction(() => Behavior.Status.Success, null, spyTeardown);
 
             BehaviorTestHarness.RunToComplete(sut);

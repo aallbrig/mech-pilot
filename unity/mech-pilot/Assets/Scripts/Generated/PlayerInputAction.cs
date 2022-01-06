@@ -5,13 +5,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
+using Object = UnityEngine.Object;
 
 namespace Generated
 {
-    public class @PlayerInput : IInputActionCollection, IDisposable
+    public class PlayerInput : IInputActionCollection, IDisposable
     {
-        public InputActionAsset asset { get; }
-        public @PlayerInput()
+
+        // Gameplay
+        private readonly InputActionMap m_Gameplay;
+        private readonly InputAction m_Gameplay_PointerDown;
+        private readonly InputAction m_Gameplay_PointerPosition;
+
+        // Menu
+        private readonly InputActionMap m_Menu;
+        private readonly InputAction m_Menu_Newaction;
+        private IGameplayActions m_GameplayActionsCallbackInterface;
+        private IMenuActions m_MenuActionsCallbackInterface;
+        public PlayerInput()
         {
             asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerInput"",
@@ -93,18 +104,21 @@ namespace Generated
     ""controlSchemes"": []
 }");
             // Gameplay
-            m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-            m_Gameplay_PointerPosition = m_Gameplay.FindAction("PointerPosition", throwIfNotFound: true);
-            m_Gameplay_PointerDown = m_Gameplay.FindAction("PointerDown", throwIfNotFound: true);
+            m_Gameplay = asset.FindActionMap("Gameplay", true);
+            m_Gameplay_PointerPosition = m_Gameplay.FindAction("PointerPosition", true);
+            m_Gameplay_PointerDown = m_Gameplay.FindAction("PointerDown", true);
             // Menu
-            m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-            m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
+            m_Menu = asset.FindActionMap("Menu", true);
+            m_Menu_Newaction = m_Menu.FindAction("New action", true);
         }
 
-        public void Dispose()
-        {
-            UnityEngine.Object.Destroy(asset);
-        }
+        public InputActionAsset asset { get; }
+
+        public GameplayActions Gameplay => new GameplayActions(this);
+
+        public MenuActions Menu => new MenuActions(this);
+
+        public void Dispose() => Object.Destroy(asset);
 
         public InputBinding? bindingMask
         {
@@ -120,109 +134,94 @@ namespace Generated
 
         public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
 
-        public bool Contains(InputAction action)
-        {
-            return asset.Contains(action);
-        }
+        public bool Contains(InputAction action) => asset.Contains(action);
 
-        public IEnumerator<InputAction> GetEnumerator()
-        {
-            return asset.GetEnumerator();
-        }
+        public IEnumerator<InputAction> GetEnumerator() => asset.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public void Enable()
-        {
-            asset.Enable();
-        }
+        public void Enable() => asset.Enable();
 
-        public void Disable()
-        {
-            asset.Disable();
-        }
+        public void Disable() => asset.Disable();
 
-        // Gameplay
-        private readonly InputActionMap m_Gameplay;
-        private IGameplayActions m_GameplayActionsCallbackInterface;
-        private readonly InputAction m_Gameplay_PointerPosition;
-        private readonly InputAction m_Gameplay_PointerDown;
         public struct GameplayActions
         {
-            private @PlayerInput m_Wrapper;
-            public GameplayActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-            public InputAction @PointerPosition => m_Wrapper.m_Gameplay_PointerPosition;
-            public InputAction @PointerDown => m_Wrapper.m_Gameplay_PointerDown;
-            public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
+            private readonly PlayerInput m_Wrapper;
+            public GameplayActions(PlayerInput wrapper) => m_Wrapper = wrapper;
+
+            public InputAction PointerPosition => m_Wrapper.m_Gameplay_PointerPosition;
+
+            public InputAction PointerDown => m_Wrapper.m_Gameplay_PointerDown;
+
+            public InputActionMap Get() => m_Wrapper.m_Gameplay;
+            public void Enable() => Get().Enable();
+            public void Disable() => Get().Disable();
+
             public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+
+            public static implicit operator InputActionMap(GameplayActions set) => set.Get();
             public void SetCallbacks(IGameplayActions instance)
             {
                 if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
                 {
-                    @PointerPosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
-                    @PointerPosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
-                    @PointerPosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
-                    @PointerDown.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerDown;
-                    @PointerDown.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerDown;
-                    @PointerDown.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerDown;
+                    PointerPosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
+                    PointerPosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
+                    PointerPosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
+                    PointerDown.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerDown;
+                    PointerDown.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerDown;
+                    PointerDown.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerDown;
                 }
                 m_Wrapper.m_GameplayActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @PointerPosition.started += instance.OnPointerPosition;
-                    @PointerPosition.performed += instance.OnPointerPosition;
-                    @PointerPosition.canceled += instance.OnPointerPosition;
-                    @PointerDown.started += instance.OnPointerDown;
-                    @PointerDown.performed += instance.OnPointerDown;
-                    @PointerDown.canceled += instance.OnPointerDown;
+                    PointerPosition.started += instance.OnPointerPosition;
+                    PointerPosition.performed += instance.OnPointerPosition;
+                    PointerPosition.canceled += instance.OnPointerPosition;
+                    PointerDown.started += instance.OnPointerDown;
+                    PointerDown.performed += instance.OnPointerDown;
+                    PointerDown.canceled += instance.OnPointerDown;
                 }
             }
         }
-        public GameplayActions @Gameplay => new GameplayActions(this);
 
-        // Menu
-        private readonly InputActionMap m_Menu;
-        private IMenuActions m_MenuActionsCallbackInterface;
-        private readonly InputAction m_Menu_Newaction;
         public struct MenuActions
         {
-            private @PlayerInput m_Wrapper;
-            public MenuActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Newaction => m_Wrapper.m_Menu_Newaction;
-            public InputActionMap Get() { return m_Wrapper.m_Menu; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
+            private readonly PlayerInput m_Wrapper;
+            public MenuActions(PlayerInput wrapper) => m_Wrapper = wrapper;
+
+            public InputAction Newaction => m_Wrapper.m_Menu_Newaction;
+
+            public InputActionMap Get() => m_Wrapper.m_Menu;
+            public void Enable() => Get().Enable();
+            public void Disable() => Get().Disable();
+
             public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+
+            public static implicit operator InputActionMap(MenuActions set) => set.Get();
             public void SetCallbacks(IMenuActions instance)
             {
                 if (m_Wrapper.m_MenuActionsCallbackInterface != null)
                 {
-                    @Newaction.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
-                    @Newaction.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
-                    @Newaction.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
+                    Newaction.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
+                    Newaction.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
+                    Newaction.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
                 }
                 m_Wrapper.m_MenuActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @Newaction.started += instance.OnNewaction;
-                    @Newaction.performed += instance.OnNewaction;
-                    @Newaction.canceled += instance.OnNewaction;
+                    Newaction.started += instance.OnNewaction;
+                    Newaction.performed += instance.OnNewaction;
+                    Newaction.canceled += instance.OnNewaction;
                 }
             }
         }
-        public MenuActions @Menu => new MenuActions(this);
+
         public interface IGameplayActions
         {
             void OnPointerPosition(InputAction.CallbackContext context);
             void OnPointerDown(InputAction.CallbackContext context);
         }
+
         public interface IMenuActions
         {
             void OnNewaction(InputAction.CallbackContext context);

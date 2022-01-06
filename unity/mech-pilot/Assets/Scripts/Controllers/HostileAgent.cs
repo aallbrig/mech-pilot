@@ -57,7 +57,7 @@ namespace Controllers
 
             var chaseBehavior = new Sequence(new List<Behavior>
             {
-                new TaskAction(() => MoveTowards(_player)) ,
+                new TaskAction(() => MoveTowards(_player)),
                 new TaskAction(() => Wait(PatrolWaitTime()))
             });
 

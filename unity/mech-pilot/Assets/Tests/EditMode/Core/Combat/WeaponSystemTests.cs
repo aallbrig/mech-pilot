@@ -15,7 +15,7 @@ namespace Tests.EditMode.Core.Combat
             sut.Fire();
 
             Assert.IsTrue(ammo.Empty());
-            
+
         }
 
         [Test]

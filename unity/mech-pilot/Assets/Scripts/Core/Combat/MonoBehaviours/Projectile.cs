@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Core.Combat.MonoBehaviours
 {
-    public class Projectile: MonoBehaviour
+    public class Projectile : MonoBehaviour
     {
         public Vector3 projectileVector = Vector3.zero;
         public float speed = 10;

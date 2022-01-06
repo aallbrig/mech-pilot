@@ -1,7 +1,8 @@
+using System;
 using Controllers;
+using Locomotion;
 using NUnit.Framework;
 using UnityEngine;
-using Locomotion;
 
 namespace Tests.PlayMode.Controllers
 {
@@ -9,7 +10,7 @@ namespace Tests.PlayMode.Controllers
     {
         public Vector3 currentNormalizedVector = Vector3.zero;
         public void SetNormalizedVector(Vector3 normalizedVector) => currentNormalizedVector = normalizedVector;
-        public void Stop() => throw new System.NotImplementedException();
+        public void Stop() => throw new NotImplementedException();
     }
 
     public class PlayerControllerTests
