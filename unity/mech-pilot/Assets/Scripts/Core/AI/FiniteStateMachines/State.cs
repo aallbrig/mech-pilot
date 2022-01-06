@@ -6,6 +6,7 @@ namespace Core.AI.FiniteStateMachines
     public interface IState
     {
         public string Id { get; }
+
         public List<ITransition> Transitions { get; }
 
         public void Enter();
@@ -15,9 +16,9 @@ namespace Core.AI.FiniteStateMachines
 
     public abstract class State : IState
     {
-        public static string GenerateId() => Guid.NewGuid().ToString();
-        private List<ITransition> _transitions;
         private string _id;
+        private List<ITransition> _transitions;
+        protected State() => _id = GenerateId();
         public abstract void Enter();
         public abstract void Execute();
         public abstract void Exit();
@@ -25,5 +26,7 @@ namespace Core.AI.FiniteStateMachines
         public List<ITransition> Transitions => _transitions ??= new List<ITransition>();
 
         public string Id => _id ??= GenerateId();
+
+        public static string GenerateId() => Guid.NewGuid().ToString();
     }
 }

@@ -3,11 +3,12 @@ namespace Core.AI.FiniteStateMachines
     public interface IFiniteStateMachine
     {
         public IState CurrentState { get; }
+
         public void Evaluate();
         public void NewState(IState newState);
     }
 
-    public class FiniteStateMachine:IFiniteStateMachine
+    public class FiniteStateMachine : IFiniteStateMachine
     {
         public FiniteStateMachine(IState initialState)
         {
