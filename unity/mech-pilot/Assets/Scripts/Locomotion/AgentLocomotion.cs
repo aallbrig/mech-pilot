@@ -4,7 +4,8 @@ namespace Locomotion
 {
     public interface ILocomotion
     {
-        void SetNormalizedVector(Vector3 normalizedVector);
+        Vector3 DirectionOfMovement { get; }
+        void NewMovementDirection(Vector3 normalizedVector);
         void Stop();
     }
 
@@ -16,7 +17,9 @@ namespace Locomotion
         private void Start() => _transform = transform;
         private void Update() => HandleMovement();
 
-        public void SetNormalizedVector(Vector3 normalizedVector) => currentDirection = normalizedVector;
+        public Vector3 DirectionOfMovement => currentDirection;
+
+        public void NewMovementDirection(Vector3 normalizedVector) => currentDirection = normalizedVector;
         public void Stop() => currentDirection = Vector3.zero;
         private void HandleMovement()
         {

@@ -9,7 +9,10 @@ namespace Tests.PlayMode.Controllers
     public class LocomotionSpy : MonoBehaviour, ILocomotion
     {
         public Vector3 currentNormalizedVector = Vector3.zero;
-        public void SetNormalizedVector(Vector3 normalizedVector) => currentNormalizedVector = normalizedVector;
+
+        public Vector3 DirectionOfMovement => currentNormalizedVector;
+
+        public void NewMovementDirection(Vector3 normalizedVector) => currentNormalizedVector = normalizedVector;
         public void Stop() => throw new NotImplementedException();
     }
 

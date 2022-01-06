@@ -93,7 +93,7 @@ namespace Controllers
         {
             var normalizedVector = (target.position - transform.position).normalized;
             if (debugLog) Debug.Log($"MoveToRandomLocation called {name} {normalizedVector}");
-            _locomotion.SetNormalizedVector(normalizedVector);
+            _locomotion.NewMovementDirection(normalizedVector);
             return Behavior.Status.Success;
         }
 
@@ -110,7 +110,7 @@ namespace Controllers
                 return Behavior.Status.Success;
 
             var vectorToTarget = (_player.position - transform.position).normalized;
-            _locomotion.SetNormalizedVector(vectorToTarget);
+            _locomotion.NewMovementDirection(vectorToTarget);
             return Behavior.Status.Running;
         };
 

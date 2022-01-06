@@ -14,14 +14,24 @@ namespace Core.AI.FiniteStateMachines
         public void Exit();
     }
 
-    public abstract class State : IState
+    public class State : IState
     {
         private string _id;
         private List<ITransition> _transitions;
-        protected State() => _id = GenerateId();
-        public abstract void Enter();
-        public abstract void Execute();
-        public abstract void Exit();
+        private readonly Action _onEnter;
+        private readonly Action _onExecute;
+        private readonly Action _onExit;
+
+        public State(Action onEnter, Action onExecute, Action onExit)
+        {
+            _id = GenerateId();
+            _onEnter = onEnter;
+            _onExecute = onExecute;
+            _onExit = onExit;
+        }
+        public void Enter() => _onEnter();
+        public void Execute() => _onExecute();
+        public void Exit() => _onExit();
 
         public List<ITransition> Transitions => _transitions ??= new List<ITransition>();
 

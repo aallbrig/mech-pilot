@@ -35,7 +35,7 @@ namespace Controllers
         {
             endTouch = TouchInteraction.Of(_controls.Gameplay.PointerPosition.ReadValue<Vector2>());
             swipe = Swipe.Of(startTouch, endTouch);
-            _locomotion.SetNormalizedVector(swipe.VectorNormalized);
+            _locomotion.NewMovementDirection(swipe.VectorNormalized);
         }
     }
 }

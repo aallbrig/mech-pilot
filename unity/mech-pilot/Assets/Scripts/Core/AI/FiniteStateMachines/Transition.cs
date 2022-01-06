@@ -1,3 +1,5 @@
+using System;
+
 namespace Core.AI.FiniteStateMachines
 {
     public interface ITransition
@@ -7,10 +9,19 @@ namespace Core.AI.FiniteStateMachines
         public void OnTransition();
     }
 
-    public abstract class Transition : ITransition
+    public class Transition : ITransition
     {
-        public abstract bool IsValid();
-        public abstract IState NextState();
-        public abstract void OnTransition();
+        private readonly Func<bool> _isValid;
+        private readonly Func<IState> _nextState;
+        private readonly Action _onTransition;
+        public Transition(Func<bool> isValid, Func<IState> nextState, Action onTransition = null)
+        {
+            _isValid = isValid;
+            _nextState = nextState;
+            _onTransition = onTransition;
+        }
+        public bool IsValid() => _isValid();
+        public IState NextState() => _nextState();
+        public void OnTransition() => _onTransition?.Invoke();
     }
 }
