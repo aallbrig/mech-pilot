@@ -8,10 +8,10 @@ namespace Tests.EditMode.Core.AI.FiniteStateMachines
         [Test]
         public void States_ExposesListOfTransitions_ForUpdating()
         {
-            var sut = new State(null, null, null);
-            
+            var sut = new State(null);
+
             sut.Transitions.Add(new FakeTransition());
-            
+
             Assert.IsTrue(sut.Transitions.Count > 0);
         }
         [Test]
@@ -19,9 +19,9 @@ namespace Tests.EditMode.Core.AI.FiniteStateMachines
         {
             var called = false;
             var sut = new State(() => called = true, null, null);
-            
+
             sut.Enter();
-            
+
             Assert.IsTrue(called);
         }
 
@@ -29,13 +29,13 @@ namespace Tests.EditMode.Core.AI.FiniteStateMachines
         public void States_AffordAbilityToSet_ExecuteCommand()
         {
             var called = false;
-            var sut = new State(null, () => called = true, null);
+            var sut = new State(() => called = true);
 
             sut.Execute();
-            
+
             Assert.IsTrue(called);
         }
-        
+
         [Test]
         public void States_AffordAbilityToSet_ExitCommand()
         {
@@ -43,7 +43,7 @@ namespace Tests.EditMode.Core.AI.FiniteStateMachines
             var sut = new State(null, null, () => called = true);
 
             sut.Exit();
-            
+
             Assert.IsTrue(called);
         }
     }

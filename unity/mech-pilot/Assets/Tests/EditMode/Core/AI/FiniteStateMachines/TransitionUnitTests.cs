@@ -1,6 +1,4 @@
 namespace Tests.EditMode.Core.AI.FiniteStateMachines
 {
-    public class TransitionUnitTests
-    {
-    }
+    public class TransitionUnitTests {}
 }

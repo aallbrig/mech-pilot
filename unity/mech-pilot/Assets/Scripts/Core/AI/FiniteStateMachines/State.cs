@@ -16,12 +16,17 @@ namespace Core.AI.FiniteStateMachines
 
     public class State : IState
     {
-        private string _id;
-        private List<ITransition> _transitions;
         private readonly Action _onEnter;
         private readonly Action _onExecute;
         private readonly Action _onExit;
+        private string _id;
+        private List<ITransition> _transitions;
 
+        public State(Action onExecute)
+        {
+            _id = GenerateId();
+            _onExecute = onExecute;
+        }
         public State(Action onEnter, Action onExecute, Action onExit)
         {
             _id = GenerateId();
@@ -29,9 +34,9 @@ namespace Core.AI.FiniteStateMachines
             _onExecute = onExecute;
             _onExit = onExit;
         }
-        public void Enter() => _onEnter();
+        public void Enter() => _onEnter?.Invoke();
         public void Execute() => _onExecute();
-        public void Exit() => _onExit();
+        public void Exit() => _onExit?.Invoke();
 
         public List<ITransition> Transitions => _transitions ??= new List<ITransition>();
 

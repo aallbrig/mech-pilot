@@ -5,6 +5,7 @@ namespace Locomotion
     public interface ILocomotion
     {
         Vector3 DirectionOfMovement { get; }
+
         void NewMovementDirection(Vector3 normalizedVector);
         void Stop();
     }
