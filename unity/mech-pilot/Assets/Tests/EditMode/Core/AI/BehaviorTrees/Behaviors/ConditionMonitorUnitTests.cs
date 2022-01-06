@@ -2,8 +2,8 @@ using System;
 using Core.AI.BehaviorTrees.Behaviors;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.BehaviorTrees.TestDoubles;
 using Tests.EditMode.Core.AI.BehaviorTrees.Utilities;
-using Tests.EditMode.Core.AI.TestDoubles;
 
 namespace Tests.EditMode.Core.AI.BehaviorTrees.Behaviors
 {

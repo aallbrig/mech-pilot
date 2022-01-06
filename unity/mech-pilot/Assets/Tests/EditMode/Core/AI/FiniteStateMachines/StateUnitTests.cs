@@ -1,5 +1,7 @@
 using Core.AI.FiniteStateMachines;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.FiniteStateMachines.TestDoubles;
+using Tests.EditMode.Core.AI.FiniteStateMachines.Utilities;
 
 namespace Tests.EditMode.Core.AI.FiniteStateMachines
 {
@@ -18,9 +20,9 @@ namespace Tests.EditMode.Core.AI.FiniteStateMachines
         public void States_AffordAbilityToSet_EnterCommand()
         {
             var called = false;
-            var sut = new State(() => called = true, null, null);
+            var sut = new State(() => called = true, () => {}, () => {});
 
-            sut.Enter();
+            StateTestHarness.RunState(sut);
 
             Assert.IsTrue(called);
         }
@@ -31,7 +33,7 @@ namespace Tests.EditMode.Core.AI.FiniteStateMachines
             var called = false;
             var sut = new State(() => called = true);
 
-            sut.Execute();
+            StateTestHarness.RunState(sut);
 
             Assert.IsTrue(called);
         }
@@ -40,9 +42,9 @@ namespace Tests.EditMode.Core.AI.FiniteStateMachines
         public void States_AffordAbilityToSet_ExitCommand()
         {
             var called = false;
-            var sut = new State(null, null, () => called = true);
+            var sut = new State(() => {}, () => {}, () => called = true);
 
-            sut.Exit();
+            StateTestHarness.RunState(sut);
 
             Assert.IsTrue(called);
         }

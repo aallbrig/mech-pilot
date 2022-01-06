@@ -1,7 +1,7 @@
 using System;
 using Core.AI.BehaviorTrees.BuildingBlocks;
 
-namespace Tests.EditMode.Core.AI.TestDoubles
+namespace Tests.EditMode.Core.AI.BehaviorTrees.TestDoubles
 {
     public class BehaviorSpy : Behavior
     {

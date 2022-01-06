@@ -1,5 +1,6 @@
 using Core.AI.FiniteStateMachines;
 using NUnit.Framework;
+using Tests.EditMode.Core.AI.FiniteStateMachines.TestDoubles;
 
 namespace Tests.EditMode.Core.AI.FiniteStateMachines
 {
@@ -10,7 +11,7 @@ namespace Tests.EditMode.Core.AI.FiniteStateMachines
         {
             var state1 = new FakeState();
             var state2 = new FakeState();
-            var transitionToState2 = new SpyTransition(() => true, () => state2, () => {});
+            var transitionToState2 = new Transition(() => true, () => state2);
             state1.Transitions.Add(transitionToState2);
             var sut = new FiniteStateMachine(state1);
 
