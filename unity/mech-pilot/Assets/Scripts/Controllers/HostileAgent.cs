@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Core.AI.BehaviorTrees;
-using Core.AI.BehaviorTrees.Behaviors;
-using Core.AI.BehaviorTrees.BuildingBlocks;
+using Editor.BehaviorTrees;
+using Editor.BehaviorTrees.Behaviors;
+using Editor.BehaviorTrees.BuildingBlocks;
 using Locomotion;
 using UnityEngine;
 using Random = UnityEngine.Random;

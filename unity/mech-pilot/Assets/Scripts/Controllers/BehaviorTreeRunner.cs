@@ -1,5 +1,5 @@
 using System.Collections;
-using Core.AI.BehaviorTrees;
+using Editor.BehaviorTrees;
 using UnityEngine;
 
 namespace Controllers
