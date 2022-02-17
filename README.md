@@ -5,3 +5,5 @@ Read more about this project in [blog form here](https://andrewallbright.com/mec
 
 ## Play
 Play the game [here](https://aallbrig.github.io/mech-pilot/WebGL/index.html).
+
+![QR code with link to play the video game](img/play-game-qr-code.png)
