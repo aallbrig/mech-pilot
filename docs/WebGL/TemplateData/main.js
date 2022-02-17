@@ -7,7 +7,7 @@ var config = {
     streamingAssetsUrl: "StreamingAssets",
     companyName: "Allbright Web Services LLC",
     productName: "Mech Pilot",
-    productVersion: "0.0.75",
+    productVersion: "0.0.76",
     devicePixelRatio: 1,
 }
 
