@@ -10,7 +10,7 @@ namespace Controllers
         private BehaviorTree _behaviorTree;
         private Coroutine _thinking;
 
-        private void Awake()
+        private void Start()
         {
             // For now, assume only one BT is defined on the game object
             // Later, smart objects will require a different strategy
@@ -27,7 +27,7 @@ namespace Controllers
         {
             while (true)
             {
-                _behaviorTree.Tick();
+                _behaviorTree?.Tick();
                 yield return new WaitForSeconds(thinkRate);
             }
         }
